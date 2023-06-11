@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "ES2020",
+      "module": "commonjs",
+      "lib": ["es2020"],
+      "outDir": "./Dist",
+      // "rootDir": "./Server",
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "strict": true,
+      "moduleResolution": "node",
+      "forceConsistentCasingInFileNames": true
+    }
+}
