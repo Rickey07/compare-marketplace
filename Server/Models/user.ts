@@ -3,7 +3,7 @@ import { v4 as uuidV4 } from "uuid";
 
 interface User {
   name: string;
-  image_url: string;
+  image_url?: string;
   password: string;
   email: string;
   objectIdField?: ObjectId;

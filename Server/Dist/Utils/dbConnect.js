@@ -14,3 +14,4 @@ const connectToDatabase = () => {
         console.log(error, "error is coming");
     });
 };
+exports.default = connectToDatabase;
