@@ -10,3 +10,5 @@ const connectToDatabase = ():void => {
         console.log(error,"error is coming")
     })
 }   
+
+export default connectToDatabase;
