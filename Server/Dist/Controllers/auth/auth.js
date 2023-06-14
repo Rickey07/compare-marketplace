@@ -15,7 +15,7 @@ const registerUser = async (req, res) => {
         const userExists = await user_1.User.findOne({ email: req.body.email });
         if (userExists !== null)
             return (0, responseHandler_1.default)(res, false, 400, "User Already Exists");
-        // If Not Then Encrypt the password 
+        // If Not Then Encrypt the password
         const encryptedPass = await bcrypt_1.default.hash(req.body.password, saltRounds);
         req.body.password = encryptedPass;
         // Store Password In DB
@@ -31,18 +31,26 @@ exports.registerUser = registerUser;
 const signInUser = async (req, res) => {
     try {
         const user = await user_1.User.findOne({ email: req.body.email });
+        // If user Doesn't Exists
         if (user === null)
             return (0, responseHandler_1.default)(res, false, 400, "Account Not Found with email Id");
         const comparePassword = await bcrypt_1.default.compare(req.body.password, user.password);
         // If Password matches generate JWT and send back as response
+        const secret = process.env.JWT_SECRET;
         if (comparePassword) {
-            const token = jsonwebtoken_1.default.sign({ foo: "bar" }, "Hello@23#", { algorithm: "HS256" });
+            const token = jsonwebtoken_1.default.sign({ _id: user?._id }, secret, {
+                algorithm: "HS256",
+                expiresIn: "2d",
+            });
             const data = {
                 token,
-                user
+                email: user.email,
+                name: user.name,
             };
             return (0, responseHandler_1.default)(res, true, 200, "Login Success", data);
         }
+        // If Password Doesn't Match
+        return (0, responseHandler_1.default)(res, false, 401, "Incorrect Credentials");
     }
     catch (error) {
         return (0, responseHandler_1.default)(res, false, 500, error.message);
