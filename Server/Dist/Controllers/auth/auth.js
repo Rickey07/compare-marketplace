@@ -3,11 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signInUser = exports.registerUser = void 0;
+exports.signInWithGoogle = exports.signInUser = exports.registerUser = void 0;
 const user_1 = require("../../Models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const responseHandler_1 = __importDefault(require("../../Utils/responseHandler"));
+const passport_google_oauth20_1 = __importDefault(require("passport-google-oauth20"));
+const passport_1 = __importDefault(require("passport"));
 const registerUser = async (req, res) => {
     const saltRounds = 10;
     try {
@@ -19,6 +21,7 @@ const registerUser = async (req, res) => {
         const encryptedPass = await bcrypt_1.default.hash(req.body.password, saltRounds);
         req.body.password = encryptedPass;
         // Store Password In DB
+        req.body.email = req.body.email.toLowerCase();
         const newUser = await new user_1.User(req.body).save();
         if (newUser !== null)
             return (0, responseHandler_1.default)(res, true, 200, "Account Created Successfully!", newUser);
@@ -57,3 +60,18 @@ const signInUser = async (req, res) => {
     }
 };
 exports.signInUser = signInUser;
+const signInWithGoogle = () => {
+    try {
+        passport_1.default.use(new passport_google_oauth20_1.default.Strategy({
+            clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+            callbackURL: "http://www.example.com/auth/google/callback"
+        }, (accessToken, refreshToken, profile, cb) => {
+            return cb("Error Occured", { userName: "PPrabadhya" });
+        }));
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
+exports.signInWithGoogle = signInWithGoogle;

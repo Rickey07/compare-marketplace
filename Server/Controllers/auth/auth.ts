@@ -20,6 +20,7 @@ const registerUser = async (req: Request, res: Response) => {
     req.body.password = encryptedPass;
 
     // Store Password In DB
+    req.body.email = req.body.email.toLowerCase();
     const newUser = await new User(req.body).save();
     if (newUser !== null)
       return ResponseHandler(
@@ -70,6 +71,18 @@ const signInUser = async (req: Request, res: Response) => {
   }
 };
 
-
+const signInWithGoogle = () => {
+  try {
+    passport.use(new GoogleStrategy.Strategy({
+      clientID:process.env.GOOGLE_OAUTH_CLIENT_ID as string,
+      clientSecret:process.env.GOOGLE_OAUTH_CLIENT_SECRET as string,
+      callbackURL:"http://www.example.com/auth/google/callback"
+    },(accessToken,refreshToken,profile,cb) => {
+      return cb("Error Occured",{userName:"PPrabadhya"})
+    }))
+  } catch (error) {
+    console.log(error)
+  }
+}
  
-export { registerUser, signInUser };
+export { registerUser, signInUser,signInWithGoogle };
