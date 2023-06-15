@@ -1,0 +1,45 @@
+.main-login-page-container {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    margin-top: 1rem;
+}
+
+.main-login-page-container .image-container {
+    display: block;
+    max-height: 700px;
+}
+
+.image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.login-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-form-card {
+    width: 300px;
+    background: white;
+    box-shadow: 8px 8px 15px 15px var(--secondaryColor);
+    padding: 1rem .2rem;
+}
+
+.login-form-container .main-form-card .tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.login-form-container .main-form-card .tabs-container span {
+    font-size: 1.3rem;
+    font-family: 'Courier New', Courier, monospace;
+    cursor: pointer;
+}
+
+.login-form-container .main-form-card .tabs-container .active-tab {
+    border-bottom: 2px solid var(--primaryColor);
+}
