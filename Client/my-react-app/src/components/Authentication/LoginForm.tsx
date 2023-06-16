@@ -2,14 +2,27 @@ import Inputwrapper from "../FormFields/Inputwrapper";
 import "./loginForm.css";
 import GoogleButton from "react-google-button";
 import Button from "../Buttons/Button";
+import formValidator from "../../helpers/formValidator";
+import { useState } from "react";
 
 const LoginForm = () => {
-  const handleInputChange = (e: any) => {
-    console.log(e.target.value);
+  const [loginDetails,setLoginDetails] = useState({
+    email:"",
+    password:"",
+    errors: {
+      email: false,
+      password: false,
+    }
+  })
+  const handleInputChange = (e: {target:HTMLInputElement}) => {
+    setLoginDetails({...loginDetails,[e.target.name]:e.target.value})
   };
 
   const LoginUser = (): void => {
-    alert("Success");
+    const {valid,userDetails} = formValidator({...loginDetails})
+    if(!valid) {
+      setLoginDetails({...loginDetails , errors:{...userDetails.errors}})
+    }
   };
 
   const signUpButtonText = "Sign In";
@@ -18,13 +31,19 @@ const LoginForm = () => {
       <form className="login-form-actual">
         <Inputwrapper
           inputType="email"
-          label="Email"
+          labelName="Email"
+          label="email"
+          error={loginDetails.errors.email}
+          errorText={"Invalid Email"}
           placeholder="Enter your email"
           handleChange={handleInputChange}
         />
         <Inputwrapper
           inputType="password"
-          label="Password"
+          labelName="Password"
+          error={loginDetails.errors.password}
+          errorText={"Password Must Contain"}
+          label="password"
           placeholder="Enter Password"
           handleChange={handleInputChange}
         />

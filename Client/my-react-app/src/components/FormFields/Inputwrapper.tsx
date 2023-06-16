@@ -7,8 +7,9 @@ interface inputProps {
   label: string;
   placeholder: string;
   passwoordVisible?: boolean;
-  error?:boolean,
-  errorText?:string
+  error?: boolean;
+  errorText?: string;
+  labelName?: string;
   handleChange(e: any): void;
 }
 
@@ -18,6 +19,7 @@ const Inputwrapper = ({
   placeholder,
   error,
   errorText,
+  labelName,
   handleChange,
 }: inputProps) => {
   // State For Password Visible
@@ -33,7 +35,7 @@ const Inputwrapper = ({
   };
   return (
     <div className="form-field-container">
-      <label htmlFor={label}>{label} </label>
+      <label htmlFor={label}>{labelName} </label>
       <input
         type={inputType}
         className={"input-text"}
@@ -48,9 +50,7 @@ const Inputwrapper = ({
           {passwordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
         </div>
       )}
-      {
-        error && <span className="error-text">{errorText}</span>
-      }
+      {error && <span className="error-text">{errorText}</span>}
     </div>
   );
 };
