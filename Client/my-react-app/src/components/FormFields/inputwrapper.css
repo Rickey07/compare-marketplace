@@ -1,0 +1,21 @@
+
+.form-field-container {
+    display: flex;
+    flex-direction: column;
+    gap:.1rem;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-field-container .input-text {
+    border-radius: 8px;
+    border: 1px solid var(--primaryDark);
+    padding: .5rem;
+} 
+
+.input-icon-container {
+    position: absolute;
+    right: 5px;
+    z-index: 5;
+    bottom:5px;
+}

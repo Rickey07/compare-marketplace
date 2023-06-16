@@ -1,6 +1,9 @@
 html {
   --primaryColor:#003366;
-  --secondaryColor:#F5F5F5
+  --primaryLight: #335599;
+  --primaryDark:#002933;
+  --primaryContrast:#FFCC99;
+  --secondaryColor:#F5F5F5;
 }
 
 /* CSS Reset */
