@@ -19,3 +19,8 @@
     z-index: 5;
     bottom:5px;
 }
+
+
+.error-text {
+    color: rgb(209, 30, 30);
+}

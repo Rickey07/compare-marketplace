@@ -2,8 +2,6 @@ import { useState } from "react";
 import Illustration from "../../assets/LogoInfo.jpg";
 import "./Login.css";
 import LoginForm from "../../components/Authentication/LoginForm";
-import Button from "../../components/Buttons/Button";
-import GoogleButton from "react-google-button";
 import SignUpForm from "../../components/Authentication/SignUpForm";
 
 const Login = () => {
@@ -13,11 +11,6 @@ const Login = () => {
     setActiveTab(activeTab === "Login" ? "Register" : "Login");
   };
 
-  const LoginUser = () => {
-    alert("Hello world");
-  };
-
-  const signUpButtonText = activeTab === "Login" ? "Sign In" : "Sign Up";
 
   return (
     <div className="main-login-page-container">
@@ -36,15 +29,7 @@ const Login = () => {
           </div>
           <h2 className="text-center login-heading">{activeTab}</h2>
           <div className="form-body-container">
-            {activeTab === "Login" ? <LoginForm /> : <SignUpForm />}
-          </div>
-          <div className="buttons-container">
-            <Button text={signUpButtonText} handleClick={LoginUser} />
-            <h4 className="text-center">OR </h4>
-            <GoogleButton
-              label="Sign In with Google"
-              style={{ width: "100%" }}
-            />
+            {activeTab === "Login" ? <LoginForm /> : <SignUpForm/>}
           </div>
         </div>
       </div>

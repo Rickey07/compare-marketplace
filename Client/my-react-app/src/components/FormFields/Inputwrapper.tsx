@@ -7,6 +7,8 @@ interface inputProps {
   label: string;
   placeholder: string;
   passwoordVisible?: boolean;
+  error?:boolean,
+  errorText?:string
   handleChange(e: any): void;
 }
 
@@ -14,6 +16,8 @@ const Inputwrapper = ({
   inputType,
   label,
   placeholder,
+  error,
+  errorText,
   handleChange,
 }: inputProps) => {
   // State For Password Visible
@@ -44,6 +48,9 @@ const Inputwrapper = ({
           {passwordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
         </div>
       )}
+      {
+        error && <span className="error-text">{errorText}</span>
+      }
     </div>
   );
 };
