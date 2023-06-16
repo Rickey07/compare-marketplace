@@ -6,22 +6,22 @@ import formValidator from "../../helpers/formValidator";
 import { useState } from "react";
 
 const LoginForm = () => {
-  const [loginDetails,setLoginDetails] = useState({
-    email:"",
-    password:"",
+  const [loginDetails, setLoginDetails] = useState({
+    email: "",
+    password: "",
     errors: {
       email: false,
       password: false,
-    }
-  })
-  const handleInputChange = (e: {target:HTMLInputElement}) => {
-    setLoginDetails({...loginDetails,[e.target.name]:e.target.value})
+    },
+  });
+  const handleInputChange = (e: { target: HTMLInputElement }) => {
+    setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
   };
 
   const LoginUser = (): void => {
-    const {valid,userDetails} = formValidator({...loginDetails})
-    if(!valid) {
-      setLoginDetails({...loginDetails , errors:{...userDetails.errors}})
+    const { valid, userDetails } = formValidator({ ...loginDetails });
+    if (!valid) {
+      setLoginDetails({ ...loginDetails, errors: { ...userDetails.errors } });
     }
   };
 

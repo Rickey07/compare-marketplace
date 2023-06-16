@@ -12,20 +12,19 @@ type errors = {
 };
 
 const SignUpForm = () => {
-
-    const errorFields:errors = {
-      name: false,
-      email: false,
-      password: false,
-      confirmPassword: false,
-    }
+  const errorFields: errors = {
+    name: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  };
 
   const [signUpDetails, setSignUpDetails] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    errors: errorFields
+    errors: errorFields,
   });
 
   const signUpButtonText = "Sign Up";
@@ -35,8 +34,8 @@ const SignUpForm = () => {
   };
 
   const LoginUser = (): void => {
-    const {valid,userDetails} = formValidator(signUpDetails)
-    setSignUpDetails({...signUpDetails,errors:userDetails.errors})
+    const { valid, userDetails } = formValidator(signUpDetails);
+    setSignUpDetails({ ...signUpDetails, errors: userDetails.errors });
   };
 
   return (
