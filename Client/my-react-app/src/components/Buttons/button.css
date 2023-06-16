@@ -1,0 +1,11 @@
+.button-container button {
+    width: 100%;
+    background-color: var(--primaryColor);
+    padding: .5rem 0;
+    color: var(--secondaryColor);
+    cursor: pointer;
+}
+
+.button-container button:hover {
+    background-color: var(--primaryDark);
+}
