@@ -19,7 +19,7 @@ interface returnDetails {
 }
 
 /**
- *
+ * @Note This function will take the formdetails it will check the errors and will return the errors object.
  * @param formDetailsParam
  * @returns formDetailswithError
  */
@@ -35,6 +35,13 @@ export default function formValidator(
   const copy = JSON.parse(JSON.stringify(formDetailsParam));
   const { email, password } = copy;
 
+  if(copy?.name?.length < 4) {
+    valid = false
+    copy.errors.name = true
+  } else {
+    copy.errors.name = false
+  }
+
   if (!emailRegex.test(email)) {
     valid = false;
     copy.errors.email = true;
@@ -48,14 +55,14 @@ export default function formValidator(
   } else {
     copy.errors.password = false;
   }
-
-  if (password?.toLowerCase() !== copy?.confirmPassword?.toLowerCase()) {
+  
+  if (password?.toLowerCase() !== copy?.confirmPassword?.toLowerCase() && copy?.confirmPassword) {
     valid = false;
     copy.errors.confirmPassword = true;
   } else {
     copy.errors.confirmPassowrd = false;
   }
-
+  console.log(valid)
   return {
     valid,
     userDetails: copy,
