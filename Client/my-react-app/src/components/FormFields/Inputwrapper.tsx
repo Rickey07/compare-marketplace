@@ -34,24 +34,28 @@ const Inputwrapper = ({
     setPasswordVisible(!passwordVisible);
   };
   return (
-    <div className="form-field-container">
-      <label htmlFor={label}>{labelName} </label>
-      <input
-        type={inputType}
-        className={"input-text"}
-        placeholder={placeholder}
-        name={label}
-        id={label}
-        onChange={handleChange}
-      ></input>
-      {/* only Load if type of input is password  */}
-      {inputType === "password" && (
-        <div className="input-icon-container" onClick={onPasswordIconClick}>
-          {passwordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
+    <>
+      <div className="form-field-container">
+        <div className="main-input-container">
+        <label htmlFor={label}>{labelName} </label>
+        <input
+          type={inputType}
+          className={"input-text"}
+          placeholder={placeholder}
+          name={label}
+          id={label}
+          onChange={handleChange}
+        ></input>
+        {/* only Load if type of input is password  */}
+        {inputType === "password" && (
+          <div className="input-icon-container" onClick={onPasswordIconClick}>
+            {passwordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
+          </div>
+        )}
         </div>
-      )}
-      {error && <span className="error-text">{errorText}</span>}
-    </div>
+        {error && <span className="error-text">{errorText}</span>}
+      </div>
+    </>
   );
 };
 

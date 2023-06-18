@@ -2,7 +2,10 @@ import Inputwrapper from "../FormFields/Inputwrapper";
 import GoogleButton from "react-google-button";
 import Button from "../Buttons/Button";
 import formValidator from "../../helpers/formValidator";
+import { APP_CONFIGS } from "../../models";
 import { useState } from "react";
+import axios, { AxiosError } from "axios";
+import { toast } from "react-hot-toast";
 
 type errors = {
   name?: boolean;
@@ -26,16 +29,34 @@ const SignUpForm = () => {
     confirmPassword: "",
     errors: errorFields,
   });
+  const [loading,setLoading] = useState(false)
 
-  const signUpButtonText = "Sign Up";
+  const signUpButtonText = loading ? "Processing" : "Sign Up";
 
   const handleChange = (e: { target: HTMLInputElement }): void => {
     setSignUpDetails({ ...signUpDetails, [e.target.name]: e.target.value });
   };
 
-  const LoginUser = (): void => {
+  const LoginUser = async (): Promise<void> => {
     const { valid, userDetails } = formValidator(signUpDetails);
-    setSignUpDetails({ ...signUpDetails, errors: userDetails.errors });
+    if(!valid) {
+      setSignUpDetails({ ...signUpDetails, errors: userDetails.errors });
+    } 
+    try {
+      setLoading(true)
+      const url = APP_CONFIGS.API_BASE_URL + '/register'
+      const signUpData = {
+        name:signUpDetails?.name,
+        email:signUpDetails?.email,
+        password:signUpDetails?.password
+      }
+      const response = await axios.post(url,signUpData);
+      const {data}  = response
+      toast.success(data.message) 
+    } catch (error:any) {
+      toast.error(error.message)
+    }
+    setLoading(false)
   };
 
   return (

@@ -4,6 +4,7 @@ import GoogleButton from "react-google-button";
 import Button from "../Buttons/Button";
 import formValidator from "../../helpers/formValidator";
 import { useState } from "react";
+import useAuthContext from "../../context/Auth/useAuthContext";
 
 const LoginForm = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -14,18 +15,26 @@ const LoginForm = () => {
       password: false,
     },
   });
+  const contextValue = useAuthContext();
+
   const handleInputChange = (e: { target: HTMLInputElement }) => {
     setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
   };
 
   const LoginUser = (): void => {
     const { valid, userDetails } = formValidator({ ...loginDetails });
+    console.log(valid)
     if (!valid) {
       setLoginDetails({ ...loginDetails, errors: { ...userDetails.errors } });
+    } else {
+      contextValue?.loginUser({
+        email: loginDetails.email,
+        password: loginDetails.password,
+      });
     }
   };
 
-  const signUpButtonText = "Sign In";
+  const signUpButtonText = "Sign In"
   return (
     <div className="login-form-div">
       <form className="login-form-actual">
