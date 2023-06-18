@@ -2,13 +2,14 @@ import './button.css'
 
 interface buttonProps {
     text:string,
-    handleClick():void
+    handleClick():void,
+    isLoading?:boolean
 }
 
-const Button = ({text,handleClick}:buttonProps) => {
+const Button = ({text,handleClick,isLoading}:buttonProps) => {
   return (
     <div className="button-container">
-        <button onClick={handleClick}>{text}</button>
+        <button onClick={handleClick} disabled={isLoading}>{text}</button>
     </div>
   )
 }

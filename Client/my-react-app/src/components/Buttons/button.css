@@ -9,3 +9,8 @@
 .button-container button:hover {
     background-color: var(--primaryDark);
 }
+
+.button-container button:disabled {
+    background-color: #6d8dae;
+    
+}

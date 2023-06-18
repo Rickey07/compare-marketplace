@@ -22,16 +22,18 @@ const SignUpForm = () => {
     confirmPassword: false,
   };
 
-  const [signUpDetails, setSignUpDetails] = useState({
+  const initialState = {
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    errors: errorFields,
-  });
+    errors:errorFields
+  }
+
+  const [signUpDetails, setSignUpDetails] = useState(initialState);
   const [loading,setLoading] = useState(false)
 
-  const signUpButtonText = loading ? "Processing" : "Sign Up";
+  const signUpButtonText = loading ? "Processing..." : "Sign Up";
 
   const handleChange = (e: { target: HTMLInputElement }): void => {
     setSignUpDetails({ ...signUpDetails, [e.target.name]: e.target.value });
@@ -41,22 +43,25 @@ const SignUpForm = () => {
     const { valid, userDetails } = formValidator(signUpDetails);
     if(!valid) {
       setSignUpDetails({ ...signUpDetails, errors: userDetails.errors });
-    } 
-    try {
-      setLoading(true)
-      const url = APP_CONFIGS.API_BASE_URL + '/register'
-      const signUpData = {
-        name:signUpDetails?.name,
-        email:signUpDetails?.email,
-        password:signUpDetails?.password
+    } else {
+      try {
+        setLoading(true)
+        const url = APP_CONFIGS.API_BASE_URL + '/register'
+        const signUpData = {
+          name:signUpDetails?.name,
+          email:signUpDetails?.email,
+          password:signUpDetails?.password
+        }
+        const response = await axios.post(url,signUpData);
+        const {data}  = response
+        setSignUpDetails(initialState)
+        toast.success(data.message) 
+      } catch (error:any) {
+        toast.error(error.message)
       }
-      const response = await axios.post(url,signUpData);
-      const {data}  = response
-      toast.success(data.message) 
-    } catch (error:any) {
-      toast.error(error.message)
+      setLoading(false)
     }
-    setLoading(false)
+   
   };
 
   return (
@@ -68,7 +73,7 @@ const SignUpForm = () => {
           inputType="text"
           placeholder="Enter Your Name"
           error={signUpDetails.errors.name}
-          errorText="Full Name Must be of at least 7 characters"
+          errorText="Full Name Must be of at least 4 characters"
           handleChange={handleChange}
         />
         <Inputwrapper
@@ -100,7 +105,7 @@ const SignUpForm = () => {
         />
       </form>
       <div className="buttons-container">
-        <Button text={signUpButtonText} handleClick={LoginUser} />
+        <Button text={signUpButtonText} isLoading={loading} handleClick={LoginUser} />
         <h4 className="text-center">OR </h4>
         <GoogleButton label="Sign In with Google" style={{ width: "100%" }} />
       </div>

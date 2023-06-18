@@ -1,0 +1,21 @@
+.search-bar-container {
+    position: relative;
+    padding-left: 40px;
+    box-shadow: 12px 5px 12px 0px var(--secondaryColor);
+    background: var(--secondaryColor);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    margin-left: 3rem;
+}
+
+.search-bar-container input {
+    width: 100%;
+}
+
+.search-bar-container .search-icon {
+    position: absolute;
+    left: .5rem;
+    height: 20px;
+}

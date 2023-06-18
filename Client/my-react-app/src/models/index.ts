@@ -14,7 +14,7 @@ export type loginDetails = {
 
 export interface AuthContextValue {
     authState: userDetails;
-    loginUser: (loginDetails: loginDetails) => Promise<any>;
+    setLoginUserDetails: (loginDetails: userDetails) => void;
   }
 
 export enum APP_CONFIGS  {
