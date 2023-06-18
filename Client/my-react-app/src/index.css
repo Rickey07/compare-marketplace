@@ -1,5 +1,6 @@
 html {
   --primaryColor:#003366;
+  --primaryColorDisabled:#6d8dae;
   --primaryLight: #335599;
   --primaryDark:#002933;
   --primaryContrast:#FFCC99;

@@ -55,8 +55,8 @@ export default function formValidator(
   } else {
     copy.errors.password = false;
   }
-  
-  if (password?.toLowerCase() !== copy?.confirmPassword?.toLowerCase() && copy?.confirmPassword) {
+  // Check if the property confirmPassword exists only in case of signup
+  if (password?.toLowerCase() !== copy?.confirmPassword?.toLowerCase() && Object.prototype.hasOwnProperty.call(copy , "confirmPassword")) {
     valid = false;
     copy.errors.confirmPassword = true;
   } else {

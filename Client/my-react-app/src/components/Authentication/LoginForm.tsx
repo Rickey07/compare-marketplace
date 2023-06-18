@@ -4,6 +4,8 @@ import GoogleButton from "react-google-button";
 import Button from "../Buttons/Button";
 import formValidator from "../../helpers/formValidator";
 import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import useAuthContext from "../../context/Auth/useAuthContext";
 
 const LoginForm = () => {
@@ -15,26 +17,37 @@ const LoginForm = () => {
       password: false,
     },
   });
+  const [loading, setLoading] = useState(false);
   const contextValue = useAuthContext();
 
   const handleInputChange = (e: { target: HTMLInputElement }) => {
     setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
   };
 
-  const LoginUser = (): void => {
+  const LoginUser = async (): Promise<void> => {
     const { valid, userDetails } = formValidator({ ...loginDetails });
-    console.log(valid)
     if (!valid) {
       setLoginDetails({ ...loginDetails, errors: { ...userDetails.errors } });
     } else {
-      contextValue?.loginUser({
-        email: loginDetails.email,
-        password: loginDetails.password,
-      });
+      try {
+        setLoading(true)
+        const url = import.meta.env.VITE_APP_API_BASE_URL + "/signIn";
+        const response = await axios.post(url, loginDetails);
+        const { data } = response;
+        toast.success(data?.message);
+        contextValue?.setLoginUserDetails(data?.data);
+      } catch (error:any) {
+        const { response } = error;
+        const { data } = response;
+        if (!data?.success) {
+          toast.error(data?.message);
+        }
+      }
+      setLoading(false)
     }
   };
 
-  const signUpButtonText = "Sign In"
+  const signUpButtonText = loading ? "Signing In..." : "Sign In";
   return (
     <div className="login-form-div">
       <form className="login-form-actual">
@@ -58,7 +71,7 @@ const LoginForm = () => {
         />
       </form>
       <div className="buttons-container">
-        <Button text={signUpButtonText} handleClick={LoginUser} />
+        <Button text={signUpButtonText} isLoading={loading} handleClick={LoginUser} />
         <h4 className="text-center">OR </h4>
         <GoogleButton label="Sign In with Google" style={{ width: "100%" }} />
       </div>
