@@ -4,6 +4,7 @@ import "./Login.css";
 import LoginForm from "../../components/Authentication/LoginForm";
 import SignUpForm from "../../components/Authentication/SignUpForm";
 import Searchbar from "../../components/Searchbar/Searchbar";
+import Chip from "../../components/Chip/Chip";
 
 const Login = () => {
   const [activeTab, setActiveTab] = useState("Login");
@@ -14,6 +15,7 @@ const Login = () => {
 
 
   return (
+    <>
     <div className="main-login-page-container">
       <div className="image-container">
         <img src={Illustration} alt={"Logo"}></img>
@@ -35,7 +37,10 @@ const Login = () => {
         </div>
       </div>
       <Searchbar/>
+
     </div>
+          <Chip text="hello"/>
+    </>
   );
 };
 

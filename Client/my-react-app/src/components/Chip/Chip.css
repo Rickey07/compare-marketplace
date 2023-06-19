@@ -1,0 +1,7 @@
+.main-chip {
+    background-color: var(--secondaryDark);
+    color: #101010;
+    max-width: fit-content;
+    padding: 10px 7px;
+    border-radius: 8px;
+}
