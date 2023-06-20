@@ -1,13 +1,14 @@
 import './Chip.css'
 interface propTypes  {
     text:string,
-    handleClick():void
+    handleClick(text:string):void,
+    isActive?:boolean
 }
 
-const Chip = ({text,handleClick}:propTypes) => {
+const Chip = ({text,handleClick,isActive}:propTypes) => {
   return (
-    <div onClick={handleClick} className={"main-chip"}>
-        {text}
+    <div onClick={ () => handleClick(text)} className={ isActive?"main-chip active-chip" : "main-chip"}>
+        <span className='chip-text'>{text}</span>
     </div>
   )
 }

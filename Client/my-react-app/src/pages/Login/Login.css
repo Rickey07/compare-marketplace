@@ -65,6 +65,12 @@
   gap: 0.5rem;
 }
 
+.categories-container {
+  display: flex;
+  gap:.5rem;
+  margin-top: 2rem;
+}
+
 /* Media Queries  */    
 
 @media screen and (max-width: 967px) {

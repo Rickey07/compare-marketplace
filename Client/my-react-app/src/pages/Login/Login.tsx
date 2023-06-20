@@ -13,6 +13,12 @@ const Login = () => {
     setActiveTab(activeTab === "Login" ? "Register" : "Login");
   };
 
+  const handleClick = () => {
+    alert("here")
+  }
+
+  const categories = ["Tech Giants","Fashion","Healthcare"]
+
 
   return (
     <>
@@ -36,10 +42,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Searchbar/>
-
     </div>
-          <Chip text="hello"/>
     </>
   );
 };

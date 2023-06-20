@@ -1,7 +1,9 @@
 import { Toaster } from "react-hot-toast";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
 import { AuthContextProvider } from "./context/Auth/Auth";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 
 function App() {
@@ -24,8 +26,11 @@ function App() {
   }}
 />
       <AuthContextProvider>
-        <Header />
-        <Login />
+      <Header />
+        <Routes>
+         <Route path="/" element={<Login/>}/> 
+         <Route path="/dashboard" element={<Dashboard/>}/>
+        </Routes>
       </AuthContextProvider>
     </>
   );
