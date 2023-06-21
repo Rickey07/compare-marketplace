@@ -11,7 +11,7 @@ const Dashboard = () => {
     setSelectedCategory(text)
   };
   const handleChange = () => {
-    alert("ehllo")
+    alert("Hello")
   }
   return (
     <div className="main-dashboard-container">
