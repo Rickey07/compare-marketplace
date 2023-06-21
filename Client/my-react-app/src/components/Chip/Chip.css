@@ -2,6 +2,25 @@
     background-color: var(--secondaryDark);
     color: #101010;
     max-width: fit-content;
-    padding: 10px 7px;
+    padding: 0 10px;
     border-radius: 8px;
+    cursor: pointer;
+}
+
+.main-chip .chip-text {
+    max-width: 20rem;
+    overflow: hidden;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    font-weight: 400;
+    display: block;
+    height: 32px;
+    min-width: 12px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+ .active-chip {
+    background-color: #101010;
+    color: #ffffff;
 }
