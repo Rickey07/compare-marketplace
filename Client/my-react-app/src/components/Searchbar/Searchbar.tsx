@@ -2,7 +2,7 @@ import './searchbar.css';
 import { Search } from 'react-feather';
 
 interface searchBarProps {
-    handleChange():void,
+    handleChange(e:any):void,
     value?:string
 }
 
