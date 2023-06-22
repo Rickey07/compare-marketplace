@@ -2,6 +2,7 @@ import Searchbar from "../../components/Searchbar/Searchbar";
 import "./dashboard.css";
 import Chip from "../../components/Chip/Chip";
 import { useState } from "react";
+import useFetch from "../../hooks/useFetch";
 
 const Dashboard = () => {
   const categories = ["Tech Giants", "Fashion", "Healthcare"];
@@ -10,9 +11,12 @@ const Dashboard = () => {
   const handleClick = (text:string) => {
     setSelectedCategory(text)
   };
-  const handleChange = () => {
-    alert("ehllo")
+  const handleChange = (e:{target:HTMLInputElement}):void => {
+    console.log(e.target.value)
   }
+
+  
+
   return (
     <div className="main-dashboard-container">
       <div className="dashboard">
@@ -33,6 +37,9 @@ const Dashboard = () => {
               );
             })}
           </div>
+        </div>
+        <div className="table-container">
+            
         </div>
       </div>
     </div>

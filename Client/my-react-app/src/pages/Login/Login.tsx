@@ -17,7 +17,6 @@ const Login = () => {
     alert("here")
   }
 
-  const categories = ["Tech Giants","Fashion","Healthcare"]
 
 
   return (

@@ -6,3 +6,10 @@
 .categories-container-wrapper {
     margin-top: 1rem;
 }
+
+.table-container {
+    border: 1px solid gray;
+    margin-top: 2rem;
+    height: 60vh;
+    border-radius: 8px;
+}
