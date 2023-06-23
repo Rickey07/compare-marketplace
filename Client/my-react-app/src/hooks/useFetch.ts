@@ -14,10 +14,9 @@ export default function useFetch(url:string) {
         try {
             setLoading(true)
             const {data} = await axios.get(url)
-            console.log(data)
+            setData(data)
         } catch (error:any) {
             setError(error)
-            alert(error)
         }
     }
 
