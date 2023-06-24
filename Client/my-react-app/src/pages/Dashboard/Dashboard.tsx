@@ -1,9 +1,8 @@
 import Searchbar from "../../components/Searchbar/Searchbar";
 import "./dashboard.css";
 import Chip from "../../components/Chip/Chip";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { APP_CONFIGS } from "../../models";
-import useFetch from "../../hooks/useFetch";
 
 const Dashboard = () => {
   const categories = ["Tech Giants", "Fashion", "Healthcare"];
@@ -11,8 +10,6 @@ const Dashboard = () => {
   const [keyword,setKeyword] = useState("")
   const url = APP_CONFIGS.API_BASE_URL 
   const modifiedURL = `${url}/products/?source=amazon,flipkart,myntra&keyword=${keyword}&page=1`
-  const [loading,error,data] = useFetch(modifiedURL)
-  console.log(loading,error,data)
 
   const handleClick = (text:string) => {
     setSelectedCategory(text)
@@ -21,6 +18,19 @@ const Dashboard = () => {
     setKeyword(e.target.value)
   }
 
+  useEffect(() => {
+    if(keyword!=="" && selectedCategory!=="") {
+
+    }
+  },[])
+
+  async function getProducts () {
+    try {
+      
+    } catch (error:any) {
+      
+    }
+  }
   
 
   return (
