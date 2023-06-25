@@ -3,11 +3,13 @@ import "./dashboard.css";
 import Chip from "../../components/Chip/Chip";
 import { useEffect, useState } from "react";
 import { APP_CONFIGS } from "../../models";
+import axios from "axios";
 
 const Dashboard = () => {
   const categories = ["Tech Giants", "Fashion", "Healthcare"];
   const [selectedCategory,setSelectedCategory] = useState("")
   const [keyword,setKeyword] = useState("")
+  const [ProductsData,setProductsData] = useState([])
   const url = APP_CONFIGS.API_BASE_URL 
   const modifiedURL = `${url}/products/?source=amazon,flipkart,myntra&keyword=${keyword}&page=1`
 
@@ -20,15 +22,16 @@ const Dashboard = () => {
 
   useEffect(() => {
     if(keyword!=="" && selectedCategory!=="") {
-
+      getProducts()
     }
-  },[])
+  },[selectedCategory,keyword])
 
   async function getProducts () {
     try {
-      
+      const data = await axios.get(modifiedURL)
+      setProductsData(data.data)
     } catch (error:any) {
-      
+      console.log(error)
     }
   }
   
