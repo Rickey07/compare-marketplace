@@ -1,0 +1,20 @@
+.loader-container {
+    left: 0;
+    top: 0;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(244, 246, 248, 0.4);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(3px);
+}
+
+.loader-container .loader-text {
+    font-size: 1.5rem;
+    color: var(--primaryColor);
+}

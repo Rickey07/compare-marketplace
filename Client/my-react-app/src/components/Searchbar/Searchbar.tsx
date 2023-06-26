@@ -9,7 +9,7 @@ interface searchBarProps {
 const Searchbar = ({handleChange,value}:searchBarProps) => {
   return (
     <div className="search-bar-container">
-      <input type={"text"} placeholder={"Enter Product Name to compare"} value={value} onChange={handleChange}/>
+      <input type={"text"} placeholder={"Enter Product Name to compare & Hit Enter"} value={value} onKeyUp={handleChange}/>
       <Search className='search-icon'/>
     </div>
   )

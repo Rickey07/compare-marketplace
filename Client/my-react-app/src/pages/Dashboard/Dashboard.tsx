@@ -1,8 +1,9 @@
 import Searchbar from "../../components/Searchbar/Searchbar";
 import "./dashboard.css";
 import Chip from "../../components/Chip/Chip";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { APP_CONFIGS } from "../../models";
+import Loader from "../../components/Loader/Loader";
 import axios from "axios";
 
 const Dashboard = () => {
@@ -10,14 +11,41 @@ const Dashboard = () => {
   const [selectedCategory,setSelectedCategory] = useState("")
   const [keyword,setKeyword] = useState("")
   const [ProductsData,setProductsData] = useState([])
+  const [loaderVisible,setLoaderVisible] = useState(false)
   const url = APP_CONFIGS.API_BASE_URL 
   const modifiedURL = `${url}/products/?source=amazon,flipkart,myntra&keyword=${keyword}&page=1`
+
+  const columns = useMemo(() => [{
+    Header:"Product Name",
+    accessor:"name"
+  },
+  {
+    Header:"Amazon Price",
+    accessor:"amz_price"
+  },
+  {
+    Header:"Flipkart Price",
+    accessor:"flip_price"
+  },
+  {
+    Header:"Amazon Rating",
+    accessor:"amz_rating"
+  },
+  {
+    Header:"Flipkart Rating",
+    accessor:"flip_rating"
+  }
+],[])
 
   const handleClick = (text:string) => {
     setSelectedCategory(text)
   };
-  const handleChange = (e:{target:HTMLInputElement}):void => {
-    setKeyword(e.target.value)
+  const handleChange = (e:{target:HTMLInputElement,key:KeyboardEvent}):void => {
+    if(String(e.key) === "Enter" || e.target.value === "") {
+      if(e.target.value.toLowerCase() !== keyword) {
+        setKeyword(e.target.value.toLowerCase())
+      }
+    }
   }
 
   useEffect(() => {
@@ -28,8 +56,11 @@ const Dashboard = () => {
 
   async function getProducts () {
     try {
+      setLoaderVisible(true)
       const data = await axios.get(modifiedURL)
+      console.log(data.data)
       setProductsData(data.data)
+      setLoaderVisible(false)
     } catch (error:any) {
       console.log(error)
     }
@@ -37,6 +68,8 @@ const Dashboard = () => {
   
 
   return (
+    <>
+    <Loader visible={loaderVisible}/>
     <div className="main-dashboard-container">
       <div className="dashboard">
         <div className="search-bar-container">
@@ -62,6 +95,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
