@@ -5,36 +5,40 @@ import { useEffect, useMemo, useState } from "react";
 import { APP_CONFIGS } from "../../models";
 import Loader from "../../components/Loader/Loader";
 import axios from "axios";
+import { createColumnHelper } from "@tanstack/react-table";
+import Table from "../../components/Table/Table";
+
+
+type Product = {
+  name?:string,
+  amz_price?:string,
+  flip_price?:string
+}
 
 const Dashboard = () => {
   const categories = ["Tech Giants", "Fashion", "Healthcare"];
   const [selectedCategory,setSelectedCategory] = useState("")
   const [keyword,setKeyword] = useState("")
-  const [ProductsData,setProductsData] = useState([])
+  const [ProductsData,setProductsData] = useState({
+    dataAfterComparison:[]
+
+  })
   const [loaderVisible,setLoaderVisible] = useState(false)
   const url = APP_CONFIGS.API_BASE_URL 
   const modifiedURL = `${url}/products/?source=amazon,flipkart,myntra&keyword=${keyword}&page=1`
 
-  const columns = useMemo(() => [{
-    Header:"Product Name",
-    accessor:"name"
-  },
-  {
-    Header:"Amazon Price",
-    accessor:"amz_price"
-  },
-  {
-    Header:"Flipkart Price",
-    accessor:"flip_price"
-  },
-  {
-    Header:"Amazon Rating",
-    accessor:"amz_rating"
-  },
-  {
-    Header:"Flipkart Rating",
-    accessor:"flip_rating"
-  }
+  const columnHelper = createColumnHelper<Product>()
+
+  const columns = useMemo(() => [
+    columnHelper.accessor('name',{
+      header:"Product Name"
+    }),
+    columnHelper.accessor('amz_price',{
+      header:"Amazon Price"
+    }),
+    columnHelper.accessor('amz_price',{
+      header:"Flipkart Price"
+    }),
 ],[])
 
   const handleClick = (text:string) => {
@@ -91,7 +95,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="table-container">
-            
+           { ProductsData && <Table columns={columns} data={ProductsData?.dataAfterComparison}/>}
         </div>
       </div>
     </div>
