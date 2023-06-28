@@ -31,13 +31,14 @@ const Dashboard = () => {
 
   const columns = useMemo(() => [
     columnHelper.accessor('name',{
-      header:"Product Name"
+      header:"Product Name",
     }),
     columnHelper.accessor('amz_price',{
       header:"Amazon Price"
     }),
-    columnHelper.accessor('amz_price',{
-      header:"Flipkart Price"
+    columnHelper.accessor('flip_price',{
+      header:"Flipkart Price",
+      
     }),
 ],[])
 
