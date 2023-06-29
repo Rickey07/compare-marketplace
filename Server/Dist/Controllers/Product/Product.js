@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.scrapeFlipkart = exports.scrapeAmazon = void 0;
+exports.scrapeNetMeds = exports.scrapeMg = exports.scrapeMyntra = exports.scrapeTataCliq = exports.scrapeFlipkart = exports.scrapeAmazon = void 0;
 const cheerio = __importStar(require("cheerio"));
 const scrapeAmazon = (data) => {
     const $ = cheerio.load(data);
@@ -57,3 +57,15 @@ const scrapeFlipkart = (data) => {
     return products;
 };
 exports.scrapeFlipkart = scrapeFlipkart;
+const scrapeTataCliq = (data) => {
+};
+exports.scrapeTataCliq = scrapeTataCliq;
+const scrapeMyntra = (data) => {
+};
+exports.scrapeMyntra = scrapeMyntra;
+const scrapeMg = (data) => {
+};
+exports.scrapeMg = scrapeMg;
+const scrapeNetMeds = (data) => {
+};
+exports.scrapeNetMeds = scrapeNetMeds;

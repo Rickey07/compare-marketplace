@@ -33,5 +33,21 @@ const scrapeFlipkart = (data:any) => {
     return products
 }
 
-export {scrapeAmazon,scrapeFlipkart}
+const scrapeTataCliq = (data:any) => {
+  
+}
+
+const scrapeMyntra = (data:any) => {
+
+}
+
+const scrapeMg = (data:any) => {
+
+}
+
+const scrapeNetMeds = (data:any) => {
+
+}
+
+export {scrapeAmazon,scrapeFlipkart,scrapeTataCliq,scrapeMyntra,scrapeMg,scrapeNetMeds}
 
