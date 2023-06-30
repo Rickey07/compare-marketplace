@@ -38,6 +38,20 @@ const scrapeTataCliq = (data:any) => {
 }
 
 const scrapeMyntra = (data:any) => {
+  const $ = cheerio.load(data)
+  const products:any = [];
+  $(".nameCls").each((i,el) => {
+    console.log(el)
+    const id = Math.random()*212
+    const name = $(el).find('.nameCls').text();
+    const price = $(el).find('.price').text();
+    const rating = "-"
+    const image = $(el).find('.rilrtl-lazy-img').attr('src')
+    const link = "https://www.ajio.com" + $(el).find('.rilrtl-products-list__link').attr('href')
+    const product = {id,name,price,rating,image,link}
+    products.push(product)
+  })
+  return products
 
 }
 

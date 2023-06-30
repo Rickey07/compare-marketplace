@@ -42,7 +42,7 @@ productRoutes.get("/", async (req: Request, res: Response) => {
   // ALL API Urls 
   const amazon_url = `https://www.amazon.in/s?k=${keyword}&page=${page}`;
   const flipkart_url = `https://www.flipkart.com/search?q=$${keyword}&page=${page}`;
-  const myntra_url = `https://www.myntra.com/${keyword}?rawQuery=${keyword}`;
+  const ajio_url = `https://www.ajio.com/search/?text=${keyword}`;
   const tata_cliq_url = `https://www.tatacliq.com/search/?searchCategory=all&text=${keyword}`;
   const netmeds_url = `https://www.netmeds.com/catalogsearch/result/${keyword}/all?prod_meds[page]=${page}`;
   const mg_1_url = `https://www.1mg.com/search/all?name=${keyword}`;
@@ -50,7 +50,7 @@ productRoutes.get("/", async (req: Request, res: Response) => {
   const platform_url_1 = category?.includes("Tech")
     ? amazon_url
     : category?.includes("Fashion")
-    ? myntra_url
+    ? ajio_url
     : netmeds_url;
   const platform_url_2 = category?.includes("Tech")
     ? flipkart_url
@@ -58,11 +58,11 @@ productRoutes.get("/", async (req: Request, res: Response) => {
     ? tata_cliq_url
     : mg_1_url;
   try {
-    console.log(platform_url_1,platform_url_2)
     const platformResponse1 = await request.get(platform_url_1);
     const platformResponse2 = await request.get(platform_url_2);
     const dataFlip: Array<responseObjectProduct> =
       scraperObject.scraper1(platformResponse1);
+      console.log(dataFlip)
     const dataAmz: Array<responseObjectProduct> = 
       scraperObject.scraper2(platformResponse2);
     const dataAfterComparison = consolidatedData(dataAmz, dataFlip);
