@@ -25,7 +25,7 @@ const Dashboard = () => {
   })
   const [loaderVisible,setLoaderVisible] = useState(false)
   const url = APP_CONFIGS.API_BASE_URL 
-  const modifiedURL = `${url}/products/?source=amazon,flipkart,myntra&keyword=${keyword}&page=1`
+  const modifiedURL = `${url}/products/?category=${selectedCategory}&keyword=${keyword}&page=1`
 
   const columnHelper = createColumnHelper<Product>()
 
@@ -96,7 +96,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="table-container">
-           { ProductsData && <Table columns={columns} data={ProductsData?.dataAfterComparison}/>}
+           { ProductsData?.dataAfterComparison && <Table columns={columns} data={ProductsData?.dataAfterComparison}/>}
         </div>
       </div>
     </div>
