@@ -41,7 +41,7 @@ const scrapeMyntra = (data:any) => {
   const $ = cheerio.load(data)
   const products:any = [];
   $(".nameCls").each((i,el) => {
-    console.log(el)
+    // Name class not working
     const id = Math.random()*212
     const name = $(el).find('.nameCls').text();
     const price = $(el).find('.price').text();
