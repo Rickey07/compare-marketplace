@@ -60,7 +60,7 @@ const scrapeMg = (data:any) => {
 }
 
 const scrapeNetMeds = (data:any) => {
-
+  
 }
 
 export {scrapeAmazon,scrapeFlipkart,scrapeTataCliq,scrapeMyntra,scrapeMg,scrapeNetMeds}
