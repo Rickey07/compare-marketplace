@@ -33,6 +33,7 @@ interface queryRes {
 
 productRoutes.get("/", async (req: Request, res: Response) => {
   const { keyword, category, page } = req.query as ParsedUrlQuery;
+  // Assigned Scraper into a scraper object
   const scraperObject = category?.includes("Tech")
     ? { scraper1: scrapeAmazon, scraper2: scrapeFlipkart }
     : category?.includes("Fashion") ? 
