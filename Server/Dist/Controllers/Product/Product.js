@@ -58,6 +58,14 @@ const scrapeFlipkart = (data) => {
 };
 exports.scrapeFlipkart = scrapeFlipkart;
 const scrapeTataCliq = (data) => {
+    const $ = cheerio.load(data);
+    const products = [];
+    $('.Grid__displayInline').each((i, el) => {
+        console.log(el);
+        const id = $(el).find('.ProductDescription__description').text();
+        products.push(id);
+    });
+    console.log(products);
 };
 exports.scrapeTataCliq = scrapeTataCliq;
 const scrapeMyntra = (data) => {
@@ -66,6 +74,11 @@ const scrapeMyntra = (data) => {
 };
 exports.scrapeMyntra = scrapeMyntra;
 const scrapeMg = (data) => {
+    const $ = cheerio.load(data);
+    const products = [];
+    $('.style__div-description___1pa6p').each((i, el) => {
+        console.log(i);
+    });
 };
 exports.scrapeMg = scrapeMg;
 const scrapeNetMeds = (data) => {
