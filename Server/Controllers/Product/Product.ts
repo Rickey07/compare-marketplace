@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import pretty from 'pretty'
 
 const scrapeAmazon = (data: any) => {
   const $ = cheerio.load(data);
@@ -34,17 +35,29 @@ const scrapeFlipkart = (data:any) => {
 }
 
 const scrapeTataCliq = (data:any) => {
-  
+  const $ = cheerio.load(data)
+  const products:any = [];
+  $('.Grid__displayInline').each((i,el) => {
+    console.log(el)
+    const id = $(el).find('.ProductDescription__description').text()
+    products.push(id)
+  })
+  console.log(products)
 }
 
 const scrapeMyntra = (data:any) => {
   const $ = cheerio.load(data)
   const products:any = [];
 
+
 }
 
 const scrapeMg = (data:any) => {
-
+  const $ = cheerio.load(data);
+  const products:any = []
+  $('.style__div-description___1pa6p').each((i,el) => {
+    console.log(i)
+  })
 }
 
 const scrapeNetMeds = (data:any) => {
