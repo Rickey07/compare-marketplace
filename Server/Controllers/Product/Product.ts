@@ -56,6 +56,7 @@ const scrapeMg = (data:any) => {
   const $ = cheerio.load(data);
   const products:any = []
   $('.style__div-description___1pa6p').each((i,el) => {
+    // Need to integrate pupetter
     console.log(i)
   })
 }
