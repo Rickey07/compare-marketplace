@@ -48,6 +48,8 @@ productRoutes.get("/", async (req: Request, res: Response) => {
   const netmeds_url = `https://www.netmeds.com/catalogsearch/result/${keyword}/all?prod_meds[page]=${page}`;
   const mg_1_url = `https://www.1mg.com/search/all?name=${keyword}`;
 
+
+  // Data Flow
   const platform_url_1 = category?.includes("Tech")
     ? amazon_url
     : category?.includes("Fashion")
@@ -63,7 +65,6 @@ productRoutes.get("/", async (req: Request, res: Response) => {
     const platformResponse2 = await request.get(platform_url_2);
     const dataFlip: Array<responseObjectProduct> =
       scraperObject.scraper1(platformResponse1);
-      console.log(dataFlip)
     const dataAmz: Array<responseObjectProduct> = 
       scraperObject.scraper2(platformResponse2);
     const dataAfterComparison = consolidatedData(dataAmz, dataFlip);
