@@ -77,6 +77,7 @@ const scrapeMg = (data) => {
     const $ = cheerio.load(data);
     const products = [];
     $('.style__div-description___1pa6p').each((i, el) => {
+        // Need to integrate pupetter
         console.log(i);
     });
 };
