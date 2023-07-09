@@ -17,6 +17,11 @@ export interface AuthContextValue {
     setLoginUserDetails: (loginDetails: userDetails) => void;
   }
 
+export type tableColumn = {
+    fieldName:string,
+    id:string
+}
+
 export enum APP_CONFIGS  {
     API_BASE_URL=import.meta.env.VITE_APP_API_BASE_URL
 }

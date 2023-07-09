@@ -1,0 +1,74 @@
+.table-head {
+    background-color: var(--primaryDark);
+    padding: 0.5rem 1rem;
+    color: var(--secondaryDark);
+    border-right: 1px solid var(--secondaryDark);
+    text-align: left;
+}
+
+.table-container-inner table thead {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+}
+
+.table-container-inner table td {
+    border-right: 1px solid var(--primaryDark);
+    border-bottom: 1px solid var(--primaryDark);
+    padding: .5rem 1rem;
+}
+
+.table-container-inner table {
+    width: 100%;    
+}
+
+.table-head:nth-child(1) {
+    border-top-left-radius: 6px;
+}
+
+.table-head:last-child{
+    border-top-right-radius:6px;
+}
+
+
+.table-container-inner .product-container {
+    display: flex;
+    gap:1rem;
+    align-items: center;
+}
+
+.table-container-inner .main-product-container {
+    position: relative;
+}
+
+.table-container-inner .main-product-container a {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.table-container-inner .product-image-container {
+    background-color: var(--primaryColorDisabled);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+}
+
+.table-container-inner .product-container img {
+    height: 20px;
+    width: 15px;
+}
+
+.share-link-container {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.copy-icon {
+    cursor: pointer;
+}
