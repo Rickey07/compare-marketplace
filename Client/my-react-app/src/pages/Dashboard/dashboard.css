@@ -12,4 +12,14 @@
     margin-top: 2rem;
     height: 60vh;
     border-radius: 8px;
+    overflow-y: scroll;
+}
+
+.comparison-desc {
+    position: relative;
+}
+
+.comparison-desc small {
+    position: absolute;
+    right: 0;
 }
