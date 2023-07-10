@@ -13,7 +13,7 @@ import {
 } from "../../Controllers/Product/Product";
 import { consolidatedData } from "../../Utils/consolidateData";
 import { ParsedUrlQuery } from "querystring";
-
+const Nightmare = require('nightmare')
 const productRoutes = express();
 
 interface responseObjectProduct {
@@ -34,6 +34,7 @@ interface queryRes {
 productRoutes.get("/", async (req: Request, res: Response) => {
   const { keyword, category, page } = req.query as ParsedUrlQuery;
   // Assigned Scraper into a scraper object
+  const nightMare = Nightmare()
   const scraperObject = category?.includes("Tech")
     ? { scraper1: scrapeAmazon, scraper2: scrapeFlipkart }
     : category?.includes("Fashion") ? 
@@ -61,21 +62,22 @@ productRoutes.get("/", async (req: Request, res: Response) => {
     ? tata_cliq_url
     : mg_1_url;
   try {
-    const platformResponse1 = await request.get(platform_url_1);
-    const platformResponse2 = await request.get(platform_url_2);
-    const dataFlip: Array<responseObjectProduct> =
-      scraperObject.scraper1(platformResponse1);
-    const dataAmz: Array<responseObjectProduct> = 
-      scraperObject.scraper2(platformResponse2);
-    const dataAfterComparison = consolidatedData(dataAmz, dataFlip);
-    const masterData = {
-      dataForDownload: {
-        amz_data: dataAmz,
-        flip_data: dataFlip,
-      },
-      dataAfterComparison,
-    };
-    res.json(masterData);
+    // const platformResponse1 = await request.get(platform_url_1);
+    // const platformResponse2 = await request.get(platform_url_2);
+    // const dataFlip: Array<responseObjectProduct> =
+    //   scraperObject.scraper1(platformResponse1);
+    // const dataAmz: Array<responseObjectProduct> = 
+    //   scraperObject.scraper2(platformResponse2);
+    // const dataAfterComparison = consolidatedData(dataAmz, dataFlip);
+    // const masterData = {
+    //   dataForDownload: {
+    //     amz_data: dataAmz,
+    //     flip_data: dataFlip,
+    //   },
+    //   dataAfterComparison,
+    // };
+    // res.json(masterData);
+    nightMare?.goto(platform_url_1).evaluate(() => )
   } catch (error) {
     res.json(error);
   }
