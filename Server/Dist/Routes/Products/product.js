@@ -5,10 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Product_1 = require("../../Controllers/Product/Product");
+const Nightmare = require('nightmare');
 const productRoutes = (0, express_1.default)();
 productRoutes.get("/", async (req, res) => {
     const { keyword, category, page } = req.query;
     // Assigned Scraper into a scraper object
+    const nightMare = Nightmare();
     const scraperObject = category?.includes("Tech")
         ? { scraper1: Product_1.scrapeAmazon, scraper2: Product_1.scrapeFlipkart }
         : category?.includes("Fashion") ?
@@ -48,6 +50,7 @@ productRoutes.get("/", async (req, res) => {
         //   dataAfterComparison,
         // };
         // res.json(masterData);
+        nightMare?.goto(platform_url_1).evaluate(() => );
     }
     catch (error) {
         res.json(error);
