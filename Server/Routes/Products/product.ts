@@ -77,7 +77,7 @@ productRoutes.get("/", async (req: Request, res: Response) => {
     //   dataAfterComparison,
     // };
     // res.json(masterData);
-    nightMare?.goto(platform_url_1).evaluate(() => )
+    nightMare?.goto(platform_url_1).evaluate(() => console.log("Nightmare not working"))
   } catch (error) {
     res.json(error);
   }
