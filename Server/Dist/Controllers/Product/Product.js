@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scrapeNetMeds = exports.scrapeMg = exports.scrapeMyntra = exports.scrapeTataCliq = exports.scrapeFlipkart = exports.scrapeAmazon = void 0;
 const cheerio = __importStar(require("cheerio"));
+const pupetter = require('puppeteer');
 const scrapeAmazon = (data) => {
     const $ = cheerio.load(data);
     const products = [];
@@ -57,20 +58,18 @@ const scrapeFlipkart = (data) => {
     return products;
 };
 exports.scrapeFlipkart = scrapeFlipkart;
-const scrapeTataCliq = (data) => {
-    const $ = cheerio.load(data);
-    const products = [];
-    $('.Grid__displayInline').each((i, el) => {
-        console.log(el);
-        const id = $(el).find('.ProductDescription__description').text();
-        products.push(id);
-    });
-    console.log(products);
+const scrapeTataCliq = async (url) => {
+    const browser = await pupetter.launch({});
+    const page = await browser.newPage();
+    await page.goto(url);
+    const productPrice = await page.waitForSelector();
 };
 exports.scrapeTataCliq = scrapeTataCliq;
-const scrapeMyntra = (data) => {
-    const $ = cheerio.load(data);
-    const products = [];
+const scrapeMyntra = async (url) => {
+    const browser = await pupetter.launch({});
+    const page = await browser.newPage();
+    await page.goto(url);
+    const productPrice = await page.waitForSelector();
 };
 exports.scrapeMyntra = scrapeMyntra;
 const scrapeMg = (data) => {

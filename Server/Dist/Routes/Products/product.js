@@ -4,7 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const request_promise_1 = __importDefault(require("request-promise"));
 const Product_1 = require("../../Controllers/Product/Product");
+const consolidateData_1 = require("../../Utils/consolidateData");
 const Nightmare = require('nightmare');
 const productRoutes = (0, express_1.default)();
 productRoutes.get("/", async (req, res) => {
@@ -35,22 +37,29 @@ productRoutes.get("/", async (req, res) => {
             ? tata_cliq_url
             : mg_1_url;
     try {
-        // const platformResponse1 = await request.get(platform_url_1);
-        // const platformResponse2 = await request.get(platform_url_2);
-        // const dataFlip: Array<responseObjectProduct> =
-        //   scraperObject.scraper1(platformResponse1);
-        // const dataAmz: Array<responseObjectProduct> = 
-        //   scraperObject.scraper2(platformResponse2);
-        // const dataAfterComparison = consolidatedData(dataAmz, dataFlip);
-        // const masterData = {
-        //   dataForDownload: {
-        //     amz_data: dataAmz,
-        //     flip_data: dataFlip,
-        //   },
-        //   dataAfterComparison,
-        // };
-        // res.json(masterData);
-        nightMare?.goto(platform_url_1).evaluate(() => );
+        let platformResponse1;
+        let platformResponse2;
+        let dataFlip;
+        let dataAmz;
+        if (category?.includes("Tech")) {
+            platformResponse1 = await request_promise_1.default.get(platform_url_1);
+            platformResponse2 = await request_promise_1.default.get(platform_url_2);
+            dataFlip = scraperObject.scraper1(platformResponse1);
+            dataAmz = scraperObject.scraper2(platformResponse2);
+        }
+        else {
+            dataFlip = await scraperObject.scraper1(platform_url_1);
+            dataAmz = await scraperObject.scraper2(platform_url_2);
+        }
+        const dataAfterComparison = (0, consolidateData_1.consolidatedData)(dataAmz, dataFlip);
+        const masterData = {
+            dataForDownload: {
+                amz_data: dataAmz,
+                flip_data: dataFlip,
+            },
+            dataAfterComparison,
+        };
+        res.json(masterData);
     }
     catch (error) {
         res.json(error);

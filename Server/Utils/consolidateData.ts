@@ -34,8 +34,8 @@ function compareProductNames(
 }
 
 const consolidatedData = (
-  amazonData: Array<responseObjectProduct>,
-  flipKartData: Array<responseObjectProduct>
+  amazonData: any,
+  flipKartData: any
 ): Array<consolidateProduct> => {
   const comparisonData: Array<consolidateProduct> = [];
   amazonData.forEach((amazonItem: responseObjectProduct) => {
@@ -59,7 +59,7 @@ const consolidatedData = (
     if (matchingItems.length > 0) {
       // Find the best matching item based on similarity score
       const bestMatch = matchingItems.reduce(
-        (best, current: any) => {
+        (best:any, current: any) => {
           const currentScore = similarity(amazonItem.name, current.name);
           return currentScore > best.score
             ? { item: current, score: currentScore }
