@@ -26,6 +26,7 @@
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "pretty": "^2.0.0",
+    "puppeteer": "^20.8.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "string-similarity-js": "^2.1.4",

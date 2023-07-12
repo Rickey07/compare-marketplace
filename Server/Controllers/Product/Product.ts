@@ -1,5 +1,6 @@
 import * as cheerio from "cheerio";
 import pretty from 'pretty'
+const pupetter = require('puppeteer')
 
 const scrapeAmazon = (data: any) => {
   const $ = cheerio.load(data);
@@ -34,22 +35,20 @@ const scrapeFlipkart = (data:any) => {
     return products
 }
 
-const scrapeTataCliq = (data:any) => {
-  const $ = cheerio.load(data)
-  const products:any = [];
-  $('.Grid__displayInline').each((i,el) => {
-    console.log(el)
-    const id = $(el).find('.ProductDescription__description').text()
-    products.push(id)
-  })
-  console.log(products)
+const scrapeTataCliq = async (url:string) => {
+  const browser = await pupetter.launch({});
+  const page = await browser.newPage();
+  await page.goto(url);
+
+  const productPrice = await page.waitForSelector()
 }
 
-const scrapeMyntra = (data:any) => {
-  const $ = cheerio.load(data)
-  const products:any = [];
+const scrapeMyntra = async (url:string) => {
+  const browser = await pupetter.launch({});
+  const page = await browser.newPage();
+  await page.goto(url);
 
-
+  const productPrice = await page.waitForSelector()
 }
 
 const scrapeMg = (data:any) => {
