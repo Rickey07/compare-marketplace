@@ -36,19 +36,22 @@ const scrapeFlipkart = (data:any) => {
 }
 
 const scrapeTataCliq = async (url:string) => {
-  const browser = await pupetter.launch({});
-  const page = await browser.newPage();
-  await page.goto(url);
+  // const browser = await pupetter.launch({headless:true});
+  // const page = await browser.newPage();
+  // await page.goto(url);
 
-  const productPrice = await page.waitForSelector()
+  // const productPrice = await page.waitForSelector()
 }
 
 const scrapeMyntra = async (url:string) => {
-  const browser = await pupetter.launch({});
+  const browser = await pupetter.launch({headless:true});
   const page = await browser.newPage();
   await page.goto(url);
-
-  const productPrice = await page.waitForSelector()
+  const productPrice = await page.waitForSelector('.rilrtl-products-list__item')
+  const allElements = await page.$$('.rilrtl-products-list__item')
+  allElements.forEach((ele:any) => console.log(ele.$('.rilrtl-products-list__link')))
+  
+  
 }
 
 const scrapeMg = (data:any) => {

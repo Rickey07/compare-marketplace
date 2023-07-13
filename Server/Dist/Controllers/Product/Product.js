@@ -59,17 +59,19 @@ const scrapeFlipkart = (data) => {
 };
 exports.scrapeFlipkart = scrapeFlipkart;
 const scrapeTataCliq = async (url) => {
-    const browser = await pupetter.launch({});
-    const page = await browser.newPage();
-    await page.goto(url);
-    const productPrice = await page.waitForSelector();
+    // const browser = await pupetter.launch({headless:true});
+    // const page = await browser.newPage();
+    // await page.goto(url);
+    // const productPrice = await page.waitForSelector()
 };
 exports.scrapeTataCliq = scrapeTataCliq;
 const scrapeMyntra = async (url) => {
-    const browser = await pupetter.launch({});
+    const browser = await pupetter.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(url);
-    const productPrice = await page.waitForSelector();
+    const productPrice = await page.waitForSelector('.rilrtl-products-list__item');
+    const allElements = await page.$$('.rilrtl-products-list__item');
+    allElements.forEach((ele) => console.log(ele.$('.rilrtl-products-list__link')));
 };
 exports.scrapeMyntra = scrapeMyntra;
 const scrapeMg = (data) => {
