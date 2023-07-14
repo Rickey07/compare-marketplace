@@ -75,6 +75,7 @@ productRoutes.get("/", async (req: Request, res: Response) => {
        dataFlip = await scraperObject.scraper1(platform_url_1);
        dataAmz = await scraperObject.scraper2(platform_url_2);
     }
+    // Consolidate Data For Comparison
     const dataAfterComparison = consolidatedData(dataAmz, dataFlip);
     const masterData = {
       dataForDownload: {
