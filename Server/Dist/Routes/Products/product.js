@@ -7,17 +7,15 @@ const express_1 = __importDefault(require("express"));
 const request_promise_1 = __importDefault(require("request-promise"));
 const Product_1 = require("../../Controllers/Product/Product");
 const consolidateData_1 = require("../../Utils/consolidateData");
-const Nightmare = require('nightmare');
 const productRoutes = (0, express_1.default)();
 productRoutes.get("/", async (req, res) => {
     const { keyword, category, page } = req.query;
     // Assigned Scraper into a scraper object
-    const nightMare = Nightmare();
     const scraperObject = category?.includes("Tech")
         ? { scraper1: Product_1.scrapeAmazon, scraper2: Product_1.scrapeFlipkart }
         : category?.includes("Fashion") ?
             { scraper1: Product_1.scrapeMyntra, scraper2: Product_1.scrapeTataCliq } :
-            { scraper1: Product_1.scrapeNetMeds, scraper2: Product_1.scrapeMg };
+            { scraper1: Product_1.scrapeMg, scraper2: Product_1.scrapeNetMeds };
     // ALL API Urls 
     const amazon_url = `https://www.amazon.in/s?k=${keyword}&page=${page}`;
     const flipkart_url = `https://www.flipkart.com/search?q=$${keyword}&page=${page}`;
@@ -30,12 +28,12 @@ productRoutes.get("/", async (req, res) => {
         ? amazon_url
         : category?.includes("Fashion")
             ? ajio_url
-            : netmeds_url;
+            : mg_1_url;
     const platform_url_2 = category?.includes("Tech")
         ? flipkart_url
         : category?.includes("Fashion")
             ? tata_cliq_url
-            : mg_1_url;
+            : netmeds_url;
     try {
         let platformResponse1;
         let platformResponse2;
@@ -46,11 +44,14 @@ productRoutes.get("/", async (req, res) => {
             platformResponse2 = await request_promise_1.default.get(platform_url_2);
             dataFlip = scraperObject.scraper1(platformResponse1);
             dataAmz = scraperObject.scraper2(platformResponse2);
+            console.log(dataFlip, dataAmz);
         }
         else {
+            // Using Puppeteer For Scrapers
             dataFlip = await scraperObject.scraper1(platform_url_1);
             dataAmz = await scraperObject.scraper2(platform_url_2);
         }
+        // Consolidate Data For Comparison
         const dataAfterComparison = (0, consolidateData_1.consolidatedData)(dataAmz, dataFlip);
         const masterData = {
             dataForDownload: {
