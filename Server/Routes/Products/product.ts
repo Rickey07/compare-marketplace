@@ -13,7 +13,6 @@ import {
 } from "../../Controllers/Product/Product";
 import { consolidatedData } from "../../Utils/consolidateData";
 import { ParsedUrlQuery } from "querystring";
-const Nightmare = require('nightmare')
 const productRoutes = express();
 
 interface responseObjectProduct {
@@ -34,12 +33,11 @@ interface queryRes {
 productRoutes.get("/", async (req: Request, res: Response) => {
   const { keyword, category, page } = req.query as ParsedUrlQuery;
   // Assigned Scraper into a scraper object
-  const nightMare = Nightmare()
   const scraperObject = category?.includes("Tech")
     ? { scraper1: scrapeAmazon, scraper2: scrapeFlipkart }
     : category?.includes("Fashion") ? 
     {scraper1:scrapeMyntra,scraper2:scrapeTataCliq} : 
-    {scraper1:scrapeNetMeds,scraper2:scrapeMg}
+    {scraper1:scrapeMg,scraper2:scrapeNetMeds}
     
   // ALL API Urls 
   const amazon_url = `https://www.amazon.in/s?k=${keyword}&page=${page}`;
@@ -55,12 +53,12 @@ productRoutes.get("/", async (req: Request, res: Response) => {
     ? amazon_url
     : category?.includes("Fashion")
     ? ajio_url
-    : netmeds_url;
+    : mg_1_url;
   const platform_url_2 = category?.includes("Tech")
     ? flipkart_url
     : category?.includes("Fashion")
     ? tata_cliq_url
-    : mg_1_url;
+    : netmeds_url;
   try {
     let platformResponse1
     let platformResponse2
@@ -71,6 +69,7 @@ productRoutes.get("/", async (req: Request, res: Response) => {
        platformResponse2 = await request.get(platform_url_2);
        dataFlip = scraperObject.scraper1(platformResponse1);
        dataAmz = scraperObject.scraper2(platformResponse2);
+       console.log(dataFlip,dataAmz)
     } else {
       // Using Puppeteer For Scrapers
        dataFlip = await scraperObject.scraper1(platform_url_1);

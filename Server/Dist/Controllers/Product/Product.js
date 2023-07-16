@@ -25,7 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scrapeNetMeds = exports.scrapeMg = exports.scrapeMyntra = exports.scrapeTataCliq = exports.scrapeFlipkart = exports.scrapeAmazon = void 0;
 const cheerio = __importStar(require("cheerio"));
-const pupetter = require('puppeteer');
+const crypto_1 = require("crypto");
+const pupetter = require("puppeteer");
 const scrapeAmazon = (data) => {
     const $ = cheerio.load(data);
     const products = [];
@@ -46,12 +47,12 @@ const scrapeFlipkart = (data) => {
     const $ = cheerio.load(data);
     const products = [];
     $("._13oc-S").each((i, el) => {
-        const id = $(el).children().first().attr('data-id');
-        const name = $(el).find('._4rR01T').text();
+        const id = $(el).children().first().attr("data-id");
+        const name = $(el).find("._4rR01T").text();
         const price = $(el).find(`._30jeq3`).text();
         const rating = $(el).find(`._3LWZlK`).text();
-        const image = $(el).find('._396cs4').attr('src');
-        const link = "https://flipkart.com" + $(el).find('._1fQZEK').attr('href');
+        const image = $(el).find("._396cs4").attr("src");
+        const link = "https://flipkart.com" + $(el).find("._1fQZEK").attr("href");
         const product = { id, name, price, rating, image, link };
         products.push(product);
     });
@@ -59,30 +60,126 @@ const scrapeFlipkart = (data) => {
 };
 exports.scrapeFlipkart = scrapeFlipkart;
 const scrapeTataCliq = async (url) => {
-    // const browser = await pupetter.launch({headless:true});
-    // const page = await browser.newPage();
-    // await page.goto(url);
-    // const productPrice = await page.waitForSelector()
+    //   console.log(url)
+    //   const browser = await pupetter.launch({ headless: true });
+    //   const page = await browser.newPage();
+    //   await page.goto(url);
+    //    await page.waitForSelector(".content")
+    //   const allElements = await page.$(".content");
+    //   console.log(allElements,"Prabadhya")
+    //   const products = await Promise.all(
+    //     allElements.map(async (el: any) => {
+    //       const id = randomUUID()
+    //       const name = await el.$eval(".ProductDescription__description", (e: any) => e.innerText);
+    //       const price = await el.$eval("h3", (e: any) => e.innerText);
+    //       // const rating = await el.$eval('.discount', (e:any) => e.innerText) ?? "-"
+    //       const link = await el.$eval(
+    //         ".ProductModule__aTag",
+    //         (e: any) =>  e.getAttribute("href")
+    //       );
+    //       let rating = "N/A";
+    //       let image = null;
+    //       try {
+    //         rating = await el.$eval(".discount", (e: any) => e.innerText);
+    //         image = await el.$eval("img", (e: any) => e.getAttribute("src"));
+    //       } catch (error) {
+    //         // Handle the case when the price element is not present
+    //         rating = "N/A";
+    //         image = null; // Set a default value or handle it as needed
+    //       }
+    //       return { name, price, rating, image, link };
+    //     })
+    //   );
+    //   await browser.close()
+    //  return products
+    return [];
 };
 exports.scrapeTataCliq = scrapeTataCliq;
 const scrapeMyntra = async (url) => {
     const browser = await pupetter.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(url);
-    const productPrice = await page.waitForSelector('.rilrtl-products-list__item');
-    const allElements = await page.$$('.rilrtl-products-list__item');
-    allElements.forEach((ele) => console.log(ele.$('.rilrtl-products-list__link')));
+    const productPrice = await page.waitForSelector(".rilrtl-products-list__item");
+    const allElements = await page.$$(".rilrtl-products-list__item");
+    const products = await Promise.all(allElements.map(async (el) => {
+        const id = (0, crypto_1.randomUUID)();
+        const name = await el.$eval(".nameCls", (e) => e.innerText);
+        const price = await el.$eval(".price", (e) => e.innerText);
+        // const rating = await el.$eval('.discount', (e:any) => e.innerText) ?? "-"
+        const link = await el.$eval(".rilrtl-products-list__link", (e) => "https://ajio.com" + e.getAttribute("href"));
+        let rating = "N/A";
+        let image = null;
+        try {
+            rating = await el.$eval(".discount", (e) => e.innerText);
+            image = await el.$eval("img", (e) => e.getAttribute("src"));
+        }
+        catch (error) {
+            // Handle the case when the price element is not present
+            rating = "N/A";
+            image = null; // Set a default value or handle it as needed
+        }
+        return { name, price, rating, image, link };
+    }));
+    await browser.close();
+    return products;
 };
 exports.scrapeMyntra = scrapeMyntra;
-const scrapeMg = (data) => {
-    const $ = cheerio.load(data);
-    const products = [];
-    $('.style__div-description___1pa6p').each((i, el) => {
-        // Need to integrate pupetter
-        console.log(i);
-    });
+const scrapeMg = async (url) => {
+    const browser = await pupetter.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.goto(url);
+    const productPrice = await page.waitForSelector(".style__horizontal-card___1Zwmt");
+    const allElements = await page.$$(".style__horizontal-card___1Zwmt");
+    const products = await Promise.all(allElements.map(async (el) => {
+        const id = (0, crypto_1.randomUUID)();
+        const name = await el.$eval(".style__pro-title___3zxNC", (e) => e.innerText);
+        const price = await el.$eval(".style__price-tag___B2csA", (e) => e.innerText);
+        // const rating = await el.$eval('.discount', (e:any) => e.innerText) ?? "-"
+        const link = await el.$eval("a", (e) => "https://www.1mg.com" + e.getAttribute("href"));
+        let rating = "N/A";
+        let image = null;
+        try {
+            rating = await el.$eval(".style__off-badge___21aDi", (e) => e.innerText);
+            image = await el.$eval("img", (e) => e.getAttribute("src"));
+        }
+        catch (error) {
+            // Handle the case when the price element is not present
+            rating = "N/A";
+            image = null; // Set a default value or handle it as needed
+        }
+        return { id, name, price, rating, image, link };
+    }));
+    await browser.close();
+    return products;
 };
 exports.scrapeMg = scrapeMg;
-const scrapeNetMeds = (data) => {
+const scrapeNetMeds = async (url) => {
+    const browser = await pupetter.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.goto(url);
+    const productPrice = await page.waitForSelector(".ais-InfiniteHits-item");
+    const allElements = await page.$$(".ais-InfiniteHits-item");
+    const products = await Promise.all(allElements.map(async (el) => {
+        const id = (0, crypto_1.randomUUID)();
+        const name = await el.$eval(".clsgetname", (e) => e.innerText);
+        const price = await el.$eval("#final_price", (e) => e.innerText);
+        // const rating = await el.$eval('.discount', (e:any) => e.innerText) ?? "-"
+        const link = await el.$eval(".category_name", (e) => "https://netmeds.com" + e.getAttribute("href"));
+        let rating = "N/A";
+        let image = null;
+        try {
+            rating = await el.$eval(".style__off-badge___21aDi", (e) => e.innerText);
+            image = await el.$eval("img", (e) => e.getAttribute("src"));
+        }
+        catch (error) {
+            // Handle the case when the price element is not present
+            rating = "N/A";
+            image = null; // Set a default value or handle it as needed
+        }
+        return { id, name, price, rating, image, link };
+    }));
+    console.log(products);
+    await browser.close();
+    return products;
 };
 exports.scrapeNetMeds = scrapeNetMeds;
