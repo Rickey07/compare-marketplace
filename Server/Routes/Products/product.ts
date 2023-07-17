@@ -43,7 +43,7 @@ productRoutes.get("/", async (req: Request, res: Response) => {
   const amazon_url = `https://www.amazon.in/s?k=${keyword}&page=${page}`;
   const flipkart_url = `https://www.flipkart.com/search?q=$${keyword}&page=${page}`;
   const ajio_url = `https://www.ajio.com/search/?text=${keyword}`;
-  const tata_cliq_url = `https://www.tatacliq.com/search/?searchCategory=all&text=${keyword}`;
+  const tata_cliq_url = `https://www.tatacliq.com/search/?searchCategory=all&text=${keyword}`
   const netmeds_url = `https://www.netmeds.com/catalogsearch/result/${keyword}/all?prod_meds[page]=${page}`;
   const mg_1_url = `https://www.1mg.com/search/all?name=${keyword}`;
 
@@ -69,7 +69,6 @@ productRoutes.get("/", async (req: Request, res: Response) => {
        platformResponse2 = await request.get(platform_url_2);
        dataFlip = scraperObject.scraper1(platformResponse1);
        dataAmz = scraperObject.scraper2(platformResponse2);
-       console.log(dataFlip,dataAmz)
     } else {
       // Using Puppeteer For Scrapers
        dataFlip = await scraperObject.scraper1(platform_url_1);
