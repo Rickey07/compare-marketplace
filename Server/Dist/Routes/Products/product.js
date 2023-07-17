@@ -44,7 +44,6 @@ productRoutes.get("/", async (req, res) => {
             platformResponse2 = await request_promise_1.default.get(platform_url_2);
             dataFlip = scraperObject.scraper1(platformResponse1);
             dataAmz = scraperObject.scraper2(platformResponse2);
-            console.log(dataFlip, dataAmz);
         }
         else {
             // Using Puppeteer For Scrapers

@@ -60,39 +60,13 @@ const scrapeFlipkart = (data) => {
 };
 exports.scrapeFlipkart = scrapeFlipkart;
 const scrapeTataCliq = async (url) => {
-    //   console.log(url)
-    //   const browser = await pupetter.launch({ headless: true });
-    //   const page = await browser.newPage();
-    //   await page.goto(url);
-    //    await page.waitForSelector(".content")
-    //   const allElements = await page.$(".content");
-    //   console.log(allElements,"Prabadhya")
-    //   const products = await Promise.all(
-    //     allElements.map(async (el: any) => {
-    //       const id = randomUUID()
-    //       const name = await el.$eval(".ProductDescription__description", (e: any) => e.innerText);
-    //       const price = await el.$eval("h3", (e: any) => e.innerText);
-    //       // const rating = await el.$eval('.discount', (e:any) => e.innerText) ?? "-"
-    //       const link = await el.$eval(
-    //         ".ProductModule__aTag",
-    //         (e: any) =>  e.getAttribute("href")
-    //       );
-    //       let rating = "N/A";
-    //       let image = null;
-    //       try {
-    //         rating = await el.$eval(".discount", (e: any) => e.innerText);
-    //         image = await el.$eval("img", (e: any) => e.getAttribute("src"));
-    //       } catch (error) {
-    //         // Handle the case when the price element is not present
-    //         rating = "N/A";
-    //         image = null; // Set a default value or handle it as needed
-    //       }
-    //       return { name, price, rating, image, link };
-    //     })
-    //   );
-    //   await browser.close()
-    //  return products
-    return [];
+    const browser = await pupetter.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.goto(url);
+    console.log(page);
+    const productPrice = await page.waitForSelector("img");
+    const allElements = await page.$$("img");
+    console.log(allElements, "Prabadhya");
 };
 exports.scrapeTataCliq = scrapeTataCliq;
 const scrapeMyntra = async (url) => {
