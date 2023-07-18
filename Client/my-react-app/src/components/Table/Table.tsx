@@ -53,15 +53,21 @@ const ProductNameTableCell = ({
 
 const LinkWithShare = ({ link }: propTypesLink) => {
   const slicedString = link?.slice(0,20)
+  const handleCopy = async (data:string):Promise<void> => {
+   await navigator.clipboard.writeText(data);
+    // Alert the copied text
+    alert("Text copied successfully!");
+  }
   return (
     <>
       <div className="share-link-container">
         <a href={link} target={"_blank"}>{slicedString}</a>
-        <Copy className="copy-icon"/>
+        <Copy className="copy-icon" onClick={() => handleCopy(link ?? "Not any link to copy Lol!")}/>
       </div>
     </>
   );
 };
+
 
 const Table = ({ columns, data }: propTypes) => {
   const link_product_cell = ["amz_link", "flip_link"];
@@ -104,7 +110,7 @@ const Table = ({ columns, data }: propTypes) => {
                             link={tableData[id as keyof Product]}
                           />
                         </td>
-                      ) : (
+                      )  : (
                         <td>{tableData[id as keyof Product]}</td>
                       );
                     }
