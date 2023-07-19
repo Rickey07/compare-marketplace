@@ -20,7 +20,7 @@ productRoutes.get("/", async (req, res) => {
     const amazon_url = `https://www.amazon.in/s?k=${keyword}&page=${page}`;
     const flipkart_url = `https://www.flipkart.com/search?q=$${keyword}&page=${page}`;
     const ajio_url = `https://www.ajio.com/search/?text=${keyword}`;
-    const tata_cliq_url = `https://www.tatacliq.com/search/?searchCategory=all&text=${keyword}`;
+    const tata_cliq_url = `https://www.myntra.com/${keyword}?rawQuery=${keyword}`;
     const netmeds_url = `https://www.netmeds.com/catalogsearch/result/${keyword}/all?prod_meds[page]=${page}`;
     const mg_1_url = `https://www.1mg.com/search/all?name=${keyword}`;
     // Data Flow
@@ -50,6 +50,7 @@ productRoutes.get("/", async (req, res) => {
             dataFlip = await scraperObject.scraper1(platform_url_1);
             dataAmz = await scraperObject.scraper2(platform_url_2);
         }
+        console.log(dataAmz, dataFlip);
         // Consolidate Data For Comparison
         const dataAfterComparison = (0, consolidateData_1.consolidatedData)(dataAmz, dataFlip);
         const masterData = {
