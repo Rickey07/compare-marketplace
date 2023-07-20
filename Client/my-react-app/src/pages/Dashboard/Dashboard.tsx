@@ -9,6 +9,7 @@ import Table from "../../components/Table/Table";
 
 const Dashboard = () => {
   const categories = ["Tech Giants", "Fashion", "Healthcare"];
+  const columnWithSorting = ["amz_price", "flip_price"];
   const [selectedCategory, setSelectedCategory] = useState("");
   const [keyword, setKeyword] = useState("");
   const [ProductsData, setProductsData] = useState({
@@ -18,7 +19,12 @@ const Dashboard = () => {
   const url = APP_CONFIGS.API_BASE_URL;
   const modifiedURL = `${url}/products/?category=${selectedCategory}&keyword=${keyword}&page=1`;
 
-  const columns = useMemo(() => createDynamicColumns(selectedCategory),[selectedCategory])
+  const columns = useMemo(
+    () => createDynamicColumns(selectedCategory),
+    [selectedCategory]
+  );
+
+  const [dynamicColumns,setDynamicColumns] =  useState(columns)
 
   const handleClick = (text: string) => {
     setSelectedCategory(text);
@@ -33,6 +39,10 @@ const Dashboard = () => {
       }
     }
   };
+
+  const handleSort = (id:string,head:boolean):void => {
+    console.log(id,head)
+  }
 
   useEffect(() => {
     if (keyword !== "" && selectedCategory !== "") {
@@ -91,6 +101,11 @@ const Dashboard = () => {
       return {
         id: columnIdMapper(index),
         fieldName: columnTitle,
+        isSort: columnWithSorting.includes(columnIdMapper(index)),
+        ...(columnWithSorting.includes(columnIdMapper(index)) && {
+          order_by: "asc",
+          isSorted: false,
+        }),
       };
     });
     return columns;
@@ -149,10 +164,11 @@ const Dashboard = () => {
           <div className="table-container">
             {ProductsData?.dataAfterComparison?.length ? (
               <Table
-                columns={columns}
+                columns={dynamicColumns}
                 data={ProductsData?.dataAfterComparison}
+                onSort={handleSort}
               />
-            ):null}
+            ) : null}
           </div>
         </div>
       </div>

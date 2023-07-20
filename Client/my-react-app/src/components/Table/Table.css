@@ -63,6 +63,21 @@
     width: 15px;
 }
 
+.table-container-inner .sort-head {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.table-container-inner .sort-icon {
+    cursor: pointer;
+}
+
+.table-container-inner .selected {
+    color: #999;
+    background-color: white;
+}
+
 .share-link-container {
     display: flex;
     gap: .5rem;

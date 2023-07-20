@@ -1,6 +1,7 @@
 import "./Table.css";
 import { tableColumn } from "../../models";
-import { ExternalLink,Copy } from "react-feather";
+import { ExternalLink, Copy } from "react-feather";
+import { HiBarsArrowDown, HiBarsArrowUp } from "react-icons/hi2";
 type Product = {
   name?: string;
   amz_price?: string;
@@ -16,6 +17,7 @@ type Product = {
 interface propTypes {
   columns?: tableColumn[];
   data?: Product[];
+  onSort:() 
 }
 
 interface propTypesProductCell {
@@ -52,24 +54,28 @@ const ProductNameTableCell = ({
 };
 
 const LinkWithShare = ({ link }: propTypesLink) => {
-  const slicedString = link?.slice(0,20)
-  const handleCopy = async (data:string):Promise<void> => {
-   await navigator.clipboard.writeText(data);
+  const slicedString = link?.slice(0, 20);
+  const handleCopy = async (data: string): Promise<void> => {
+    await navigator.clipboard.writeText(data);
     // Alert the copied text
     alert("Text copied successfully!");
-  }
+  };
   return (
     <>
       <div className="share-link-container">
-        <a href={link} target={"_blank"}>{slicedString}</a>
-        <Copy className="copy-icon" onClick={() => handleCopy(link ?? "Not any link to copy Lol!")}/>
+        <a href={link} target={"_blank"}>
+          {slicedString}
+        </a>
+        <Copy
+          className="copy-icon"
+          onClick={() => handleCopy(link ?? "Not any link to copy Lol!")}
+        />
       </div>
     </>
   );
 };
 
-
-const Table = ({ columns, data }: propTypes) => {
+const Table = ({ columns, data , onSort }: propTypes) => {
   const link_product_cell = ["amz_link", "flip_link"];
   return (
     <div className="table-container-inner">
@@ -79,7 +85,18 @@ const Table = ({ columns, data }: propTypes) => {
             {columns?.map((th: tableColumn) => {
               return (
                 <th className="table-head" key={th.fieldName}>
-                  {th.fieldName}
+                  {th.isSort ? (
+                    <>
+                      <div className={th.isSorted ?"sort-head selected" : "sort-head"}>
+                        <span onClick={() => onSort(th.id,th.order_by)}>
+                          <HiBarsArrowDown size={20} className="sort-icon" />
+                        </span>
+                        <span>{th.fieldName}</span>
+                      </div>
+                    </>
+                  ) : (
+                    th.fieldName
+                  )}
                 </th>
               );
             })}
@@ -110,7 +127,7 @@ const Table = ({ columns, data }: propTypes) => {
                             link={tableData[id as keyof Product]}
                           />
                         </td>
-                      )  : (
+                      ) : (
                         <td>{tableData[id as keyof Product]}</td>
                       );
                     }
