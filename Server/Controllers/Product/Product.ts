@@ -40,12 +40,10 @@ const scrapeTataCliq = async (url: string) => {
   const browser = await pupetter.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(url);
-  console.log(page)
-  const productPrice = await page.waitForSelector("img");
-  const allElements = await page.$$("img");
+  console.log(page,"Prabadhya")
+  const productPrice = await page.waitForSelector("div");
+  const allElements = await page.$("div");
   console.log(allElements,"Prabadhya")
-  
-
 };
 
 const scrapeMyntra = async (url: string) => {

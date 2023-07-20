@@ -19,7 +19,10 @@ export interface AuthContextValue {
 
 export type tableColumn = {
     fieldName:string,
-    id:string
+    id:string,
+    isSort:boolean,
+    isSorted?:boolean,
+    order_by?:string
 }
 
 export enum APP_CONFIGS  {
