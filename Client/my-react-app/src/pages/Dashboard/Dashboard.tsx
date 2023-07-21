@@ -7,6 +7,19 @@ import Loader from "../../components/Loader/Loader";
 import axios from "axios";
 import Table from "../../components/Table/Table";
 
+
+type Product = {
+  name?: string;
+  amz_price?: string;
+  flip_price?: string;
+  flip_rating?: string;
+  amz_rating?: string;
+  amz_link?: string;
+  fliplink?: string;
+  flip_image?: string;
+  amz_image?: string;
+};
+
 const Dashboard = () => {
   const categories = ["Tech Giants", "Fashion", "Healthcare"];
   const columnWithSorting = ["amz_price", "flip_price"];
@@ -24,7 +37,7 @@ const Dashboard = () => {
     [selectedCategory]
   );
 
-  const [dynamicColumns,setDynamicColumns] =  useState(columns)
+  const [dynamicColumns, setDynamicColumns] = useState(columns);
 
   const handleClick = (text: string) => {
     setSelectedCategory(text);
@@ -40,9 +53,31 @@ const Dashboard = () => {
     }
   };
 
-  const handleSort = (id:string,head:boolean):void => {
-    console.log(id,head)
-  }
+  const handleSort = (id: string, head: string): void => {
+    setDynamicColumns((prev) => {
+      return [...prev]?.map((column) => {
+        if (column.id === id) {
+          column.isSorted = true;
+          column.order_by = head === "asc" ? "desc" : "asc";
+        } else {
+          column.isSorted = false;
+        }
+        return { ...column };
+      });
+    });
+    setProductsData((prev) => {
+      return {
+        ...prev,
+        dataAfterComparison: prev?.dataAfterComparison?.sort(
+          (a: any, b: any): any => {
+            const currentVal = a[id].replace(/\D+/g, "");
+            const nextVal = b[id].replace(/\D+/g, "");
+            return head === "asc" ? currentVal - nextVal : nextVal - currentVal;
+          }
+        ),
+      };
+    });
+  };
 
   useEffect(() => {
     if (keyword !== "" && selectedCategory !== "") {
@@ -50,11 +85,15 @@ const Dashboard = () => {
     }
   }, [selectedCategory, keyword]);
 
+  useEffect(() => {
+    const columns = createDynamicColumns(selectedCategory)
+    setDynamicColumns(columns)
+  },[selectedCategory])
+
   async function getProducts() {
     try {
       setLoaderVisible(true);
       const data = await axios.get(modifiedURL);
-      console.log(data.data);
       setProductsData(data.data);
       setLoaderVisible(false);
     } catch (error: any) {
