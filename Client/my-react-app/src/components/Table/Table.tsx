@@ -17,7 +17,7 @@ type Product = {
 interface propTypes {
   columns?: tableColumn[];
   data?: Product[];
-  onSort:() 
+  onSort(id: string, order_by?: string): void;
 }
 
 interface propTypesProductCell {
@@ -75,7 +75,7 @@ const LinkWithShare = ({ link }: propTypesLink) => {
   );
 };
 
-const Table = ({ columns, data , onSort }: propTypes) => {
+const Table = ({ columns, data, onSort }: propTypes) => {
   const link_product_cell = ["amz_link", "flip_link"];
   return (
     <div className="table-container-inner">
@@ -84,12 +84,23 @@ const Table = ({ columns, data , onSort }: propTypes) => {
           <tr>
             {columns?.map((th: tableColumn) => {
               return (
-                <th className="table-head" key={th.fieldName}>
+                <th
+                  className={
+                    th.isSorted
+                      ? "sort-head selected table-head"
+                      : "sort-head table-head"
+                  }
+                  key={th.fieldName}
+                >
                   {th.isSort ? (
                     <>
-                      <div className={th.isSorted ?"sort-head selected" : "sort-head"}>
-                        <span onClick={() => onSort(th.id,th.order_by)}>
-                          <HiBarsArrowDown size={20} className="sort-icon" />
+                      <div className="sort-head">
+                        <span onClick={() => onSort(th.id, th?.order_by)}>
+                          {th?.order_by === "asc" ? (
+                            <HiBarsArrowDown size={20} className="sort-icon" />
+                          ) : (
+                            <HiBarsArrowUp className="sort-icon" size={20} />
+                          )}
                         </span>
                         <span>{th.fieldName}</span>
                       </div>
