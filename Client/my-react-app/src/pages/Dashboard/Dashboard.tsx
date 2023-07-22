@@ -23,6 +23,7 @@ type Product = {
 const Dashboard = () => {
   const categories = ["Tech Giants", "Fashion", "Healthcare"];
   const columnWithSorting = ["amz_price", "flip_price"];
+  const columnsWithSearch = ["name"];
   const [selectedCategory, setSelectedCategory] = useState("");
   const [keyword, setKeyword] = useState("");
   const [ProductsData, setProductsData] = useState({
@@ -145,6 +146,10 @@ const Dashboard = () => {
           order_by: "asc",
           isSorted: false,
         }),
+        isSearch:columnsWithSearch.includes(columnIdMapper(index)),
+        ...(columnsWithSearch.includes(columnIdMapper(index)) && {
+          isSearchEnabled:false
+        })
       };
     });
     return columns;

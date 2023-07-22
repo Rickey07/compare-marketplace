@@ -22,7 +22,9 @@ export type tableColumn = {
     id:string,
     isSort:boolean,
     isSorted?:boolean,
-    order_by?:string
+    order_by?:string,
+    isSearch:boolean,
+    isSearchEnabled?:boolean
 }
 
 export enum APP_CONFIGS  {

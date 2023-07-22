@@ -2,6 +2,11 @@ import "./Table.css";
 import { tableColumn } from "../../models";
 import { ExternalLink, Copy } from "react-feather";
 import { HiBarsArrowDown, HiBarsArrowUp } from "react-icons/hi2";
+import {AiOutlineSearch} from 'react-icons/ai';
+import {GiCancel} from 'react-icons/gi'
+import { useState } from "react";
+import Inputwrapper from "../FormFields/Inputwrapper";
+
 type Product = {
   name?: string;
   amz_price?: string;
@@ -77,6 +82,12 @@ const LinkWithShare = ({ link }: propTypesLink) => {
 
 const Table = ({ columns, data, onSort }: propTypes) => {
   const link_product_cell = ["amz_link", "flip_link"];
+  const [isSearch,setIsSearch] = useState(false)
+
+  const handleChange = (e:{target:HTMLInputElement}) => {
+    console.log(e.target.value,"Prabadhya")
+  }
+
   return (
     <div className="table-container-inner">
       <table>
@@ -105,8 +116,20 @@ const Table = ({ columns, data, onSort }: propTypes) => {
                         <span>{th.fieldName}</span>
                       </div>
                     </>
+                  ) : th.isSearch ? (
+                    <>
+                    <div className="search-box">
+                       {th.fieldName}
+                       {isSearch && <Inputwrapper inputType="text" placeholder="search For Products" label="Hello" handleChange={handleChange}/>}
+                       <span style={{cursor:"pointer"}} onClick={() => setIsSearch(!isSearch)}>
+                       { isSearch ? <GiCancel size={20} color={"white"}/> : <AiOutlineSearch size={20} color={"white"}/>}
+                       </span>
+                    </div>
+                    </>
                   ) : (
-                    th.fieldName
+                    <>
+                      {th.fieldName}
+                    </>
                   )}
                 </th>
               );
