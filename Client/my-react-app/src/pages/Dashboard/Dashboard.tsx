@@ -155,6 +155,7 @@ const Dashboard = () => {
     return columns;
   }
 
+  // Function Mapper ID
   function columnIdMapper(id: number): string {
     switch (id) {
       case 0:
