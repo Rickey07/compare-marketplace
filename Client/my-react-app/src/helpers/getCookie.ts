@@ -12,5 +12,5 @@ export default function getCookie(nameOfCookie: string) {
       return cookie.substring(cookieName.length, cookie.length);
     }
   }
-  return null;
+  return "";
 }

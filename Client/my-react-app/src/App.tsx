@@ -9,27 +9,27 @@ import Login from "./pages/Login/Login";
 function App() {
   return (
     <>
-    <Toaster
-  position="top-center"
-  reverseOrder={false}
-  gutter={8}
-  containerClassName=""
-  containerStyle={{}}
-  toastOptions={{
-    // Define default options
-    className: '',
-    duration: 5000,
-    style: {
-      background: '#363636',
-      color: '#fff',
-    },  
-  }}
-/>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+        }}
+      />
       <AuthContextProvider>
-      <Header />
+        <Header />
         <Routes>
-         <Route path="/" element={<Login/>}/> 
-         <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </AuthContextProvider>
     </>
