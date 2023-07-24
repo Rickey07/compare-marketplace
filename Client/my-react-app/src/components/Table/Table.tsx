@@ -23,6 +23,7 @@ interface propTypes {
   columns?: tableColumn[];
   data?: Product[];
   onSort(id: string, order_by?: string): void;
+  onSearch(e:{target:HTMLInputElement},id:string):void
 }
 
 interface propTypesProductCell {
@@ -80,14 +81,9 @@ const LinkWithShare = ({ link }: propTypesLink) => {
   );
 };
 
-const Table = ({ columns, data, onSort }: propTypes) => {
+const Table = ({ columns, data, onSort,onSearch }: propTypes) => {
   const link_product_cell = ["amz_link", "flip_link"];
   const [isSearch,setIsSearch] = useState(false)
-
-  const handleChange = (e:{target:HTMLInputElement}) => {
-    console.log(e.target.value,"Prabadhya")
-  }
-
   return (
     <div className="table-container-inner">
       <table>
@@ -120,7 +116,7 @@ const Table = ({ columns, data, onSort }: propTypes) => {
                     <>
                     <div className="search-box">
                        {th.fieldName}
-                       {isSearch && <Inputwrapper inputType="text" placeholder="search For Products" label="Hello" handleChange={handleChange}/>}
+                       {isSearch && <Inputwrapper inputType="text" placeholder="Search For Products" label="Hello" handleChange={(e) => onSearch(e,th.id)} classes={"table-search-input"}/>}
                        <span style={{cursor:"pointer"}} onClick={() => setIsSearch(!isSearch)}>
                        { isSearch ? <GiCancel size={20} color={"white"}/> : <AiOutlineSearch size={20} color={"white"}/>}
                        </span>

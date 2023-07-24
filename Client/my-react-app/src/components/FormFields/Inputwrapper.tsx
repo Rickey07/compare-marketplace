@@ -10,6 +10,7 @@ interface inputProps {
   error?: boolean;
   errorText?: string;
   labelName?: string;
+  classes?:string,
   handleChange(e: any): void;
 }
 
@@ -21,6 +22,7 @@ const Inputwrapper = ({
   errorText,
   labelName,
   handleChange,
+  classes
 }: inputProps) => {
   // State For Password Visible
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -35,7 +37,7 @@ const Inputwrapper = ({
   };
   return (
     <>
-      <div className="form-field-container">
+      <div className={`form-field-container ${classes}`}>
         <div className="main-input-container">
         <label htmlFor={label}>{labelName} </label>
         <input
