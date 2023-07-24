@@ -28,7 +28,7 @@ const Dashboard = () => {
   const [ProductsData, setProductsData] = useState({
     dataAfterComparison: [],
   });
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loaderVisible, setLoaderVisible] = useState(false);
   const url = APP_CONFIGS.API_BASE_URL;
   const modifiedURL = `${url}/products/?category=${selectedCategory}&keyword=${keyword}&page=1`;
@@ -75,10 +75,16 @@ const Dashboard = () => {
     });
   };
 
+
   const handleSearch = (e: { target: HTMLInputElement }, id: string): void => {
-   setFilteredProducts((prev) => {
-    return [...prev]?.filter((data) => data[id as keyof Product]?.includes(e.target.value))
-   })
+    if(e.target.value === "") {
+      setFilteredProducts([...ProductsData.dataAfterComparison])
+    } else {
+      setFilteredProducts((prev) => {
+        return [...prev]?.filter((data) => data[id as keyof Product]?.includes(e.target.value))
+       })
+    }
+   
   };
 
   useEffect(() => {

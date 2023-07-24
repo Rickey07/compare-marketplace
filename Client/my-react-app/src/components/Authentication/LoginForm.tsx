@@ -21,7 +21,7 @@ const LoginForm = () => {
   const contextValue = useAuthContext();
 
   const handleInputChange = (e: { target: HTMLInputElement }) => {
-    setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
+    setLoginDetails({ ...loginDetails, [e.target.name]: e.target.name ==="email" ? e.target.value?.toLowerCase() : e.target.value });
   };
 
   const LoginUser = async (): Promise<void> => {
@@ -35,7 +35,9 @@ const LoginForm = () => {
         const response = await axios.post(url, loginDetails);
         const { data } = response;
         toast.success(data?.message);
-        contextValue?.setLoginUserDetails(data?.data);
+        if(data?.success) {
+          contextValue?.setLoginUserDetails(data?.data);
+        }
       } catch (error:any) {
         const { response } = error;
         const { data } = response;
