@@ -7,7 +7,6 @@ import Loader from "../../components/Loader/Loader";
 import axios from "axios";
 import Table from "../../components/Table/Table";
 
-
 type Product = {
   name?: string;
   amz_price?: string;
@@ -29,6 +28,7 @@ const Dashboard = () => {
   const [ProductsData, setProductsData] = useState({
     dataAfterComparison: [],
   });
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loaderVisible, setLoaderVisible] = useState(false);
   const url = APP_CONFIGS.API_BASE_URL;
   const modifiedURL = `${url}/products/?category=${selectedCategory}&keyword=${keyword}&page=1`;
@@ -66,18 +66,25 @@ const Dashboard = () => {
         return { ...column };
       });
     });
-    setProductsData((prev) => {
-      return {
-        ...prev,
-        dataAfterComparison: prev?.dataAfterComparison?.sort(
-          (a: any, b: any): any => {
-            const currentVal = a[id].replace(/\D+/g, "");
-            const nextVal = b[id].replace(/\D+/g, "");
-            return head === "asc" ? currentVal - nextVal : nextVal - currentVal;
-          }
-        ),
-      };
+    setFilteredProducts((prev) => {
+      return [...prev].sort((a: any, b: any): any => {
+        const currentVal = a[id].replace(/\D+/g, "");
+        const nextVal = b[id].replace(/\D+/g, "");
+        return head === "asc" ? currentVal - nextVal : nextVal - currentVal;
+      });
     });
+  };
+
+
+  const handleSearch = (e: { target: HTMLInputElement }, id: string): void => {
+    if(e.target.value === "") {
+      setFilteredProducts([...ProductsData.dataAfterComparison])
+    } else {
+      setFilteredProducts((prev) => {
+        return [...prev]?.filter((data) => data[id as keyof Product]?.includes(e.target.value))
+       })
+    }
+   
   };
 
   useEffect(() => {
@@ -87,15 +94,16 @@ const Dashboard = () => {
   }, [selectedCategory, keyword]);
 
   useEffect(() => {
-    const columns = createDynamicColumns(selectedCategory)
-    setDynamicColumns(columns)
-  },[selectedCategory])
+    const columns = createDynamicColumns(selectedCategory);
+    setDynamicColumns(columns);
+  }, [selectedCategory]);
 
   async function getProducts() {
     try {
       setLoaderVisible(true);
       const data = await axios.get(modifiedURL);
       setProductsData(data.data);
+      setFilteredProducts(data?.data?.dataAfterComparison);
       setLoaderVisible(false);
     } catch (error: any) {
       console.log(error);
@@ -141,15 +149,16 @@ const Dashboard = () => {
       return {
         id: columnIdMapper(index),
         fieldName: columnTitle,
+        // Add Sorting and Search Conditions On Particular Columns Only
         isSort: columnWithSorting.includes(columnIdMapper(index)),
         ...(columnWithSorting.includes(columnIdMapper(index)) && {
           order_by: "asc",
           isSorted: false,
         }),
-        isSearch:columnsWithSearch.includes(columnIdMapper(index)),
+        isSearch: columnsWithSearch.includes(columnIdMapper(index)),
         ...(columnsWithSearch.includes(columnIdMapper(index)) && {
-          isSearchEnabled:false
-        })
+          isSearchEnabled: false,
+        }),
       };
     });
     return columns;
@@ -161,9 +170,9 @@ const Dashboard = () => {
       case 0:
         return "name";
       case 1:
-        return "amz_price";
-      case 2:
         return "flip_price";
+      case 2:
+        return "amz_price";
       case 3:
         return "amz_rating";
       case 4:
@@ -210,8 +219,9 @@ const Dashboard = () => {
             {ProductsData?.dataAfterComparison?.length ? (
               <Table
                 columns={dynamicColumns}
-                data={ProductsData?.dataAfterComparison}
+                data={filteredProducts}
                 onSort={handleSort}
+                onSearch={handleSearch}
               />
             ) : null}
           </div>

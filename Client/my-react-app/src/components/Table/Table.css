@@ -87,3 +87,14 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.table-search-input {
+    margin-bottom: 0rem !important;
+    border-bottom: 1px solid white;
+    /* border-radius: 8px; */
+}
+
+.table-search-input input {
+    padding: .1rem;
+    height: 30px;
+}

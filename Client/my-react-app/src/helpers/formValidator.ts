@@ -62,7 +62,6 @@ export default function formValidator(
   } else {
     copy.errors.confirmPassowrd = false;
   }
-  console.log(valid)
   return {
     valid,
     userDetails: copy,

@@ -3,10 +3,12 @@ import "./loginForm.css";
 import GoogleButton from "react-google-button";
 import Button from "../Buttons/Button";
 import formValidator from "../../helpers/formValidator";
-import { useState } from "react";
+import setCookie from "../../helpers/setCookie";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import useAuthContext from "../../context/Auth/useAuthContext";
+import getCookie from "../../helpers/getCookie";
 
 const LoginForm = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -21,8 +23,9 @@ const LoginForm = () => {
   const contextValue = useAuthContext();
 
   const handleInputChange = (e: { target: HTMLInputElement }) => {
-    setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
+    setLoginDetails({ ...loginDetails, [e.target.name]: e.target.name ==="email" ? e.target.value?.toLowerCase() : e.target.value });
   };
+
 
   const LoginUser = async (): Promise<void> => {
     const { valid, userDetails } = formValidator({ ...loginDetails });
@@ -35,7 +38,10 @@ const LoginForm = () => {
         const response = await axios.post(url, loginDetails);
         const { data } = response;
         toast.success(data?.message);
-        contextValue?.setLoginUserDetails(data?.data);
+        if(data?.success) {
+          contextValue?.setLoginUserDetails(data?.data);
+          setCookie("userDetails",JSON.stringify(data?.data),4)
+        }
       } catch (error:any) {
         const { response } = error;
         const { data } = response;
