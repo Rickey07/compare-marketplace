@@ -27,6 +27,7 @@ function App() {
       />
       <AuthContextProvider>
         <Header />
+        {/* Custom Routing Needs to be done here  */}
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
