@@ -6,7 +6,6 @@ import { AuthContextProvider } from "./context/Auth/Auth";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 
-// APP in
 
 function App() {
   return (
