@@ -7,7 +7,6 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 
 
-// Need to create Login 
 
 function App() {
   return (
