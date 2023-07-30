@@ -5,10 +5,8 @@ import Header from "./components/Header/Header";
 import { AuthContextProvider } from "./context/Auth/Auth";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
-
-
-
 function App() {
+  // Custom ROUTER 
   return (
     <>
       <Toaster
