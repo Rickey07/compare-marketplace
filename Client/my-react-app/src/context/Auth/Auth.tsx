@@ -6,7 +6,7 @@ import getCookie from "../../helpers/getCookie";
 import { AuthActions } from "../../Reducer/Auth./authActions";
 
 const userDetailString: string = getCookie("userDetails");
-const initialState: userDetails = JSON.parse(userDetailString) === null ? {name:"",email:"",token:""} : JSON.parse(userDetailString);
+const initialState: userDetails = userDetailString === "" ? {name:"",email:"",token:""} : JSON.parse(userDetailString);
 
 export const AuthContextProvider = ({ children }: any) => {
   const [authState, authDispatch] = useReducer(authReducer, initialState);

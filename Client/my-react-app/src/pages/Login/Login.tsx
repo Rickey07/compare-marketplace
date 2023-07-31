@@ -3,8 +3,7 @@ import Illustration from "../../assets/LogoInfo.jpg";
 import "./Login.css";
 import LoginForm from "../../components/Authentication/LoginForm";
 import SignUpForm from "../../components/Authentication/SignUpForm";
-import Searchbar from "../../components/Searchbar/Searchbar";
-import Chip from "../../components/Chip/Chip";
+
 
 const Login = () => {
   const [activeTab, setActiveTab] = useState("Login");
