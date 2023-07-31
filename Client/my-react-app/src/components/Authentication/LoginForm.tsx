@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import useAuthContext from "../../context/Auth/useAuthContext";
-import getCookie from "../../helpers/getCookie";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -21,6 +21,7 @@ const LoginForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const contextValue = useAuthContext();
+  const navigate = useNavigate()
 
   const handleInputChange = (e: { target: HTMLInputElement }) => {
     setLoginDetails({ ...loginDetails, [e.target.name]: e.target.name ==="email" ? e.target.value?.toLowerCase() : e.target.value });
@@ -41,6 +42,7 @@ const LoginForm = () => {
         if(data?.success) {
           contextValue?.setLoginUserDetails(data?.data);
           setCookie("userDetails",JSON.stringify(data?.data),4)
+          navigate("/dashboard")
         }
       } catch (error:any) {
         const { response } = error;
