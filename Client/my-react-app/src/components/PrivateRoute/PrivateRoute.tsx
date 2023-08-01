@@ -14,7 +14,7 @@ const isAuthenticated = (): boolean => {
 
 const PrivateRoute = ({ children }: reactComponent) => {
   if (!isAuthenticated()) {
-    toast.error("Please Login");
+    toast.error("Please Login!")
     return <Navigate to={"/"}/>
   }
   return children

@@ -1,8 +1,18 @@
 import "./header.css";
 import Logo from "../../assets/Logo1.png";
-import { GitHub, Moon } from "react-feather";
+import { GitHub } from "react-feather";
+import { GrLogout } from "react-icons/gr";
+import useAuthContext from "../../context/Auth/useAuthContext";
 
 const Header = () => {
+
+  const contextValue = useAuthContext()
+
+
+  const handleLogout = () => {
+    // Implement Logout Logic here
+  }
+
   return (
     <header className="header" id="header">
       <nav className="nav-bar">
@@ -13,7 +23,7 @@ const Header = () => {
           <h1 className="app-heading">CompareHub</h1>
         </div>
         <div className="nav-icons-container">
-          <Moon size={40}/>
+         {contextValue?.authState?.token !=="" &&  <GrLogout size={40} cursor={"pointer"} onClick={handleLogout}/>}
           <GitHub size={40} cursor={'pointer'}/>
         </div>
       </nav>
