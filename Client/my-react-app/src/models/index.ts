@@ -27,6 +27,12 @@ export type tableColumn = {
     isSearchEnabled?:boolean
 }
 
+export type googleLoginCreds = {
+    clientId?:string | undefined,
+    credential?:string | undefined,
+    select_by?:string | undefined
+}
+
 export enum APP_CONFIGS  {
     API_BASE_URL=import.meta.env.VITE_APP_API_BASE_URL
 }

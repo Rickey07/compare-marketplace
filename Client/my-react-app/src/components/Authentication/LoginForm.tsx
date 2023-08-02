@@ -1,10 +1,11 @@
 import Inputwrapper from "../FormFields/Inputwrapper";
 import "./loginForm.css";
-import GoogleButton from "react-google-button";
+import { GoogleLogin } from "@react-oauth/google";
 import Button from "../Buttons/Button";
 import formValidator from "../../helpers/formValidator";
 import setCookie from "../../helpers/setCookie";
 import { useEffect, useState } from "react";
+import { googleLoginCreds } from "../../models";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import useAuthContext from "../../context/Auth/useAuthContext";
@@ -21,12 +22,17 @@ const LoginForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const contextValue = useAuthContext();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleInputChange = (e: { target: HTMLInputElement }) => {
-    setLoginDetails({ ...loginDetails, [e.target.name]: e.target.name ==="email" ? e.target.value?.toLowerCase() : e.target.value });
+    setLoginDetails({
+      ...loginDetails,
+      [e.target.name]:
+        e.target.name === "email"
+          ? e.target.value?.toLowerCase()
+          : e.target.value,
+    });
   };
-
 
   const LoginUser = async (): Promise<void> => {
     const { valid, userDetails } = formValidator({ ...loginDetails });
@@ -34,26 +40,37 @@ const LoginForm = () => {
       setLoginDetails({ ...loginDetails, errors: { ...userDetails.errors } });
     } else {
       try {
-        setLoading(true)
+        setLoading(true);
         const url = import.meta.env.VITE_APP_API_BASE_URL + "/signIn";
         const response = await axios.post(url, loginDetails);
         const { data } = response;
         toast.success(data?.message);
-        if(data?.success) {
+        if (data?.success) {
           contextValue?.setLoginUserDetails(data?.data);
-          setCookie("userDetails",JSON.stringify(data?.data),4)
-          navigate("/dashboard")
+          setCookie("userDetails", JSON.stringify(data?.data), 4);
+          navigate("/dashboard");
         }
-      } catch (error:any) {
+      } catch (error: any) {
         const { response } = error;
         const { data } = response;
         if (!data?.success) {
           toast.error(data?.message);
         }
       }
-      setLoading(false)
+      setLoading(false);
     }
   };
+
+  const loginWithGoogle = async (data:googleLoginCreds):Promise<void> => {
+    try {
+      setLoading(true)
+      const url = import.meta.env.VITE_APP_API_BASE_URL + "/signInWithGoogle";
+      const response = await axios.post(url,data)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const signUpButtonText = loading ? "Signing In..." : "Sign In";
   return (
@@ -79,9 +96,19 @@ const LoginForm = () => {
         />
       </form>
       <div className="buttons-container">
-        <Button text={signUpButtonText} isLoading={loading} handleClick={LoginUser} />
+        <Button
+          text={signUpButtonText}
+          isLoading={loading}
+          handleClick={LoginUser}
+        />
         <h4 className="text-center">OR </h4>
-        <GoogleButton label="Sign In with Google" style={{ width: "100%" }} />
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            loginWithGoogle(credentialResponse)
+          }}
+          width={100}
+          useOneTap
+        />
       </div>
     </div>
   );
