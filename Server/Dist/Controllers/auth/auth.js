@@ -8,8 +8,6 @@ const user_1 = require("../../Models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const responseHandler_1 = __importDefault(require("../../Utils/responseHandler"));
-const passport_google_oauth20_1 = __importDefault(require("passport-google-oauth20"));
-const passport_1 = __importDefault(require("passport"));
 const registerUser = async (req, res) => {
     const saltRounds = 10;
     try {
@@ -60,15 +58,9 @@ const signInUser = async (req, res) => {
     }
 };
 exports.signInUser = signInUser;
-const signInWithGoogle = () => {
+const signInWithGoogle = async (req, res) => {
     try {
-        passport_1.default.use(new passport_google_oauth20_1.default.Strategy({
-            clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
-            callbackURL: "http://www.example.com/auth/google/callback"
-        }, (accessToken, refreshToken, profile, cb) => {
-            return cb("Error Occured", { userName: "PPrabadhya" });
-        }));
+        return (0, responseHandler_1.default)(res, true, 200, "Login Success", req.body);
     }
     catch (error) {
         console.log(error);
