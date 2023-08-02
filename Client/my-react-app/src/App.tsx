@@ -4,6 +4,7 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { AuthContextProvider } from "./context/Auth/Auth";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 function App() {
@@ -26,14 +27,15 @@ function App() {
           },
         }}
       />
+      <GoogleOAuthProvider clientId="272481611816-9fc8mfgiqk1sdkrgv6s051orka1n5rh4.apps.googleusercontent.com">
       <AuthContextProvider >
         <Header />
-        {/* Custom Routing Needs to be done here  */}
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<PrivateRoute children={<Dashboard />}/> } />
         </Routes>
       </AuthContextProvider>
+      </GoogleOAuthProvider>
     </>
   );
 }

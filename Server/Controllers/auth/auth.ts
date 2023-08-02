@@ -71,15 +71,9 @@ const signInUser = async (req: Request, res: Response) => {
   }
 };
 
-const signInWithGoogle = () => {
+const signInWithGoogle = async (req:Request,res:Response) => {
   try {
-    passport.use(new GoogleStrategy.Strategy({
-      clientID:process.env.GOOGLE_OAUTH_CLIENT_ID as string,
-      clientSecret:process.env.GOOGLE_OAUTH_CLIENT_SECRET as string,
-      callbackURL:"http://www.example.com/auth/google/callback"
-    },(accessToken,refreshToken,profile,cb) => {
-      return cb("Error Occured",{userName:"PPrabadhya"})
-    }))
+    return ResponseHandler(res,true,200,"Login Success",req.body)
   } catch (error) {
     console.log(error)
   }

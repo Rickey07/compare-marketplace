@@ -1,8 +1,27 @@
 import "./header.css";
 import Logo from "../../assets/Logo1.png";
-import { GitHub, Moon } from "react-feather";
+import { GitHub } from "react-feather";
+import { GrLogout } from "react-icons/gr";
+import useAuthContext from "../../context/Auth/useAuthContext";
+import clearCookie from "../../helpers/clearCookie";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Header = () => {
+  const contextValue = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    clearCookie("userDetails");
+    navigate("/");
+    contextValue?.setLoginUserDetails({ name: "", email: "", token: "" });
+    toast.success("Logout Successfull!");
+  };
+
+  const redirect = () => {
+    window.open('https://github.com/Rickey07',"_blank")
+  }
+
   return (
     <header className="header" id="header">
       <nav className="nav-bar">
@@ -13,8 +32,10 @@ const Header = () => {
           <h1 className="app-heading">CompareHub</h1>
         </div>
         <div className="nav-icons-container">
-          <Moon size={40}/>
-          <GitHub size={40} cursor={'pointer'}/>
+          {contextValue?.authState?.token !== "" && (
+            <GrLogout size={40} cursor={"pointer"} onClick={handleLogout} />
+          )}
+          <GitHub size={40} cursor={"pointer"} onClick={redirect}/>
         </div>
       </nav>
     </header>
