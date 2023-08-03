@@ -3,8 +3,6 @@ import { User } from "../../Models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import ResponseHandler from "../../Utils/responseHandler";
-import GoogleStrategy from 'passport-google-oauth20';
-import passport from 'passport'
 
 const registerUser = async (req: Request, res: Response) => {
   const saltRounds = 10;
@@ -71,9 +69,48 @@ const signInUser = async (req: Request, res: Response) => {
   }
 };
 
+
+
 const signInWithGoogle = async (req:Request,res:Response) => {
   try {
-    return ResponseHandler(res,true,200,"Login Success",req.body)
+    const {name,email,picture} = req.body
+    const user = await User.findOne({ email:email });
+    if(user!==null) {
+      const secret:any = process.env.JWT_SECRET
+      const  token = jwt.sign({ _id: user?._id }, secret, {
+        algorithm: "HS256",
+        expiresIn: "2d",
+      });
+      const data = {
+        token,
+        email: user.email,
+        name: user.name,
+        image_url:picture
+      };
+      return ResponseHandler(res, true, 200, "Login Success", data);
+    }
+    const userData = {
+      name,
+      email,
+      image_url:picture
+    }
+
+    const newUser = await new User(userData).save()
+    if(newUser!==null) {
+      const secret:any = process.env.JWT_SECRET
+      const  token = jwt.sign({ _id: newUser?._id }, secret, {
+        algorithm: "HS256",
+        expiresIn: "2d",
+      });
+      const data = {
+        token,
+        email: newUser.email,
+        name: newUser.name,
+        image_url:picture
+      };
+      return ResponseHandler(res, true, 200, "Login Success", data);
+    }
+
   } catch (error) {
     console.log(error)
   }

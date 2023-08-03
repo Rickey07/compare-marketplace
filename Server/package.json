@@ -20,6 +20,7 @@
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "express-jwt": "^8.4.1",
+    "google-auth-library": "^9.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.3",
     "nightmare": "^3.0.2",
