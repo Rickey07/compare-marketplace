@@ -4,7 +4,8 @@
 export type userDetails = {
     name:string,
     email:string,
-    token:string
+    token:string,
+    image_url?:string
 }
 
 export type loginDetails = {

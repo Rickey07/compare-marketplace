@@ -66,9 +66,15 @@ const LoginForm = () => {
       setLoading(true)
       const url = import.meta.env.VITE_APP_API_BASE_URL + "/signInWithGoogle";
       const response = await axios.post(url,data)
-      console.log(response)
+      if(response?.data?.success) {
+        contextValue?.setLoginUserDetails(response?.data?.data)
+        setCookie("userDetails", JSON.stringify(response?.data?.data), 4);
+        toast.success(response?.data?.message)
+        navigate('/dashboard')
+      }
     } catch (error) {
       console.log(error)
+      toast.error("Some Unknown Error Occured")
     }
   }
 
