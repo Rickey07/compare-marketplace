@@ -60,7 +60,42 @@ const signInUser = async (req, res) => {
 exports.signInUser = signInUser;
 const signInWithGoogle = async (req, res) => {
     try {
-        return (0, responseHandler_1.default)(res, true, 200, "Login Success", req.body);
+        const { name, email, picture } = req.body;
+        const user = await user_1.User.findOne({ email: email });
+        if (user !== null) {
+            const secret = process.env.JWT_SECRET;
+            const token = jsonwebtoken_1.default.sign({ _id: user?._id }, secret, {
+                algorithm: "HS256",
+                expiresIn: "2d",
+            });
+            const data = {
+                token,
+                email: user.email,
+                name: user.name,
+                image_url: picture
+            };
+            return (0, responseHandler_1.default)(res, true, 200, "Login Success", data);
+        }
+        const userData = {
+            name,
+            email,
+            image_url: picture
+        };
+        const newUser = await new user_1.User(userData).save();
+        if (newUser !== null) {
+            const secret = process.env.JWT_SECRET;
+            const token = jsonwebtoken_1.default.sign({ _id: newUser?._id }, secret, {
+                algorithm: "HS256",
+                expiresIn: "2d",
+            });
+            const data = {
+                token,
+                email: newUser.email,
+                name: newUser.name,
+                image_url: picture
+            };
+            return (0, responseHandler_1.default)(res, true, 200, "Login Success", data);
+        }
     }
     catch (error) {
         console.log(error);
