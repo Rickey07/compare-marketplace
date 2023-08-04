@@ -12,9 +12,7 @@ const Login = () => {
     setActiveTab(activeTab === "Login" ? "Register" : "Login");
   };
 
-  const handleClick = () => {
-    alert("here")
-  }
+ 
 
 
 

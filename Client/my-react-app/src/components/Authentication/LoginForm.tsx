@@ -95,7 +95,7 @@ const LoginForm = () => {
           inputType="password"
           labelName="Password"
           error={loginDetails.errors.password}
-          errorText={"Password Must Contain"}
+          errorText={"Invalid Password"}
           label="password"
           placeholder="Enter Password"
           handleChange={handleInputChange}
@@ -112,8 +112,11 @@ const LoginForm = () => {
           onSuccess={(credentialResponse) => {
             loginWithGoogle(credentialResponse)
           }}
-          width={100}
+          width={"100%"}
           useOneTap
+          onError={() => {
+            toast.error("Some Unknown Error Occured!")
+           }}
         />
       </div>
     </div>
