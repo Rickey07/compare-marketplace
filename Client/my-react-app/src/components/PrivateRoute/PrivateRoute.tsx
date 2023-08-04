@@ -1,16 +1,12 @@
 import React from "react";
 import { toast } from "react-hot-toast";
 import { Navigate } from "react-router-dom";
-import getCookie from "../../helpers/getCookie";
+import { isAuthenticated } from "../../helpers/isAuthenticated";
 
 type reactComponent = {
   children: React.ReactElement;
 };
 
-const isAuthenticated = (): boolean => {
-  const cookie = getCookie("userDetails");
-  return cookie === "" ? false : true;
-};
 
 const PrivateRoute = ({ children }: reactComponent) => {
   if (!isAuthenticated()) {

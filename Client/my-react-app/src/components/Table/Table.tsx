@@ -152,7 +152,7 @@ const Table = ({ columns, data, onSort,onSearch }: propTypes) => {
                     const id = th?.id;
                     if (th.fieldName !== "Product Name") {
                       return link_product_cell.includes(th.id) ? (
-                        <td>
+                        <td key={th.id}>
                           <LinkWithShare
                             link={tableData[id as keyof Product]}
                           />

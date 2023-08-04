@@ -1,11 +1,15 @@
 import Inputwrapper from "../FormFields/Inputwrapper";
-import GoogleButton from "react-google-button";
+import { googleLoginCreds } from "../../models";
+import setCookie from "../../helpers/setCookie";
 import Button from "../Buttons/Button";
 import formValidator from "../../helpers/formValidator";
 import { APP_CONFIGS } from "../../models";
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
+import { GoogleLogin } from "@react-oauth/google";
+import useAuthContext from "../../context/Auth/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 type errors = {
   name?: boolean;
@@ -32,6 +36,8 @@ const SignUpForm = () => {
 
   const [signUpDetails, setSignUpDetails] = useState(initialState);
   const [loading,setLoading] = useState(false)
+  const contextValue = useAuthContext();
+  const navigate = useNavigate();
 
   const signUpButtonText = loading ? "Processing..." : "Sign Up";
 
@@ -63,6 +69,23 @@ const SignUpForm = () => {
     }
    
   };
+
+  const loginWithGoogle = async (data:googleLoginCreds):Promise<void> => {
+    try {
+      setLoading(true)
+      const url = import.meta.env.VITE_APP_API_BASE_URL + "/signInWithGoogle";
+      const response = await axios.post(url,data)
+      if(response?.data?.success) {
+        contextValue?.setLoginUserDetails(response?.data?.data)
+        setCookie("userDetails", JSON.stringify(response?.data?.data), 4);
+        toast.success(response?.data?.message)
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Some Unknown Error Occured")
+    }
+  }
 
   return (
     <div className="signup-form-div">
@@ -107,7 +130,13 @@ const SignUpForm = () => {
       <div className="buttons-container">
         <Button text={signUpButtonText} isLoading={loading} handleClick={LoginUser} />
         <h4 className="text-center">OR </h4>
-        <GoogleButton label="Sign In with Google" style={{ width: "100%" }} />
+       <GoogleLogin onSuccess={(credentials) => {
+        loginWithGoogle(credentials)
+       }} 
+       onError={() => {
+        toast.error("Some Unknown Error Occured!")
+       }}
+       size={"large"} useOneTap/>
       </div>
     </div>
   );
