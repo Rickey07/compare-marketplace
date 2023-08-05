@@ -184,6 +184,8 @@ const Dashboard = () => {
     }
   }
 
+  // Deploy to EC2 Instance
+
   return (
     <>
       <Loader visible={loaderVisible} />
