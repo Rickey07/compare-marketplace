@@ -30,13 +30,16 @@ const Dashboard = () => {
   const [loaderVisible, setLoaderVisible] = useState(false);
   const url = APP_CONFIGS.API_BASE_URL;
   const modifiedURL = `${url}/products/?category=${selectedCategory}&keyword=${keyword}&page=1`;
-  console.log(ProductsData,"Prabs")
   const columns = useMemo(
     () => createDynamicColumns(selectedCategory),
     [selectedCategory]
   );
 
   const [dynamicColumns, setDynamicColumns] = useState(columns);
+
+  // Derived Variables
+  const platform_1 = selectedCategory === "Tech Giants" ? "Amazon" : "1 Mg"
+  const platform_2 = selectedCategory === "Tech Giants" ? "Flipkart" : "Netmeds"
 
   const handleClick = (text: string) => {
     setSelectedCategory(text);
@@ -184,7 +187,6 @@ const Dashboard = () => {
     }
   }
 
-  // Deploy to EC2 Instance
 
   return (
     <>
@@ -210,10 +212,11 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="comparison-desc">
-            <small>
-              *Data Comparison: Amazon vs Flipkart , Data may contain
-              discrepancy!
-            </small>
+         {  ProductsData?.dataAfterComparison?.length ? <small>
+            {  `*Data Comparison: ${platform_1} vs ${platform_2} , Data may contain
+              discrepancy!`
+              }
+            </small> : null}
           </div>
           <div className="table-container">
             {ProductsData?.dataAfterComparison?.length ? (

@@ -4,13 +4,16 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { Navigate } from "react-router-dom";
+import { APP_CONFIGS } from "./models";
 import { AuthContextProvider } from "./context/Auth/Auth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 import { isAuthenticated } from "./helpers/isAuthenticated";
 function App() {
-  // Custom ROUTER 
+
+  const googleClientId = APP_CONFIGS.GOOGLE_CLIENT_ID
+
   return (
     <>
       <Toaster
@@ -29,7 +32,7 @@ function App() {
           },
         }}
       />
-      <GoogleOAuthProvider clientId="272481611816-9fc8mfgiqk1sdkrgv6s051orka1n5rh4.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={`${googleClientId}`}>
       <AuthContextProvider >
         <Header />
         <Routes>

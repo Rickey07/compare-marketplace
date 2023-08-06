@@ -35,5 +35,6 @@ export type googleLoginCreds = {
 }
 
 export enum APP_CONFIGS  {
-    API_BASE_URL=import.meta.env.VITE_APP_API_BASE_URL
+    API_BASE_URL=import.meta.env.VITE_APP_API_BASE_URL,
+    GOOGLE_CLIENT_ID = import.meta.env.VITE_APP_GOOGLE_AUTH_CLIENT_ID
 }
