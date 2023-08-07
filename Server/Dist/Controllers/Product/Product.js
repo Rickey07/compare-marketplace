@@ -63,10 +63,8 @@ const scrapeTataCliq = async (url) => {
     const browser = await pupetter.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(url);
-    console.log(page, "Prabadhya");
     const productPrice = await page.waitForSelector("div");
     const allElements = await page.$("div");
-    console.log(allElements, "Prabadhya");
 };
 exports.scrapeTataCliq = scrapeTataCliq;
 const scrapeMyntra = async (url) => {
@@ -152,7 +150,6 @@ const scrapeNetMeds = async (url) => {
         }
         return { id, name, price, rating, image, link };
     }));
-    console.log(products);
     await browser.close();
     return products;
 };
