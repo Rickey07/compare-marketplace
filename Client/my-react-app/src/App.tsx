@@ -12,6 +12,7 @@ import Login from "./pages/Login/Login";
 import { isAuthenticated } from "./helpers/isAuthenticated";
 function App() {
 
+  // Client ID For google Login (use your own Id)
   const googleClientId = APP_CONFIGS.GOOGLE_CLIENT_ID
 
   return (

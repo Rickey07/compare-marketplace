@@ -50,7 +50,6 @@ productRoutes.get("/", async (req, res) => {
             dataFlip = await scraperObject.scraper1(platform_url_1);
             dataAmz = await scraperObject.scraper2(platform_url_2);
         }
-        console.log(dataAmz, dataFlip);
         // Consolidate Data For Comparison
         const dataAfterComparison = (0, consolidateData_1.consolidatedData)(dataAmz, dataFlip);
         const masterData = {
