@@ -1,17 +1,22 @@
 🛍️ Compare Marketplace Project 🌟
 
-Welcome to our Compare Marketplace project! This README.md file will guide you through our project and help you get started.
+Welcome to our Compare Marketplace project! 
+This README.md file will guide you through our project and help you get started.
 
 📜 Description
+
 Our Compare Marketplace project is a feature-rich online platform that enables users to compare products and services from various vendors. It offers a seamless experience with easy product comparisons, detailed information, and a user-friendly interface.
 
 🚀 Features
+
 ✨ Intuitive user interface for effortless comparisons
 
 ✨ Compare Products From different Domains
 
 ⚙️ Installation
+
 To run this project locally, follow these steps:
+
 
 Clone the repository: git clone https://github.com/rickey07/compare-marketplace.git
 Navigate to the project directory: cd compare-marketplace
